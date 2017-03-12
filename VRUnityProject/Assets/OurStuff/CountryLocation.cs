@@ -4,12 +4,12 @@ using System.IO;
 using System.Net;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour {
+public class CountryLocation : MonoBehaviour {
     float PI = 3.1415F;
-
-	// Use this for initialization
-	void Start () {
-        Dictionary<string,List <float>> countries = new Dictionary<string, List<float>>();
+    public Dictionary<string, List<float>> countries = new Dictionary<string, List<float>>();
+    // Use this for initialization
+    void Start () {
+        
         using (var fs = File.OpenRead("Lat and Long of Capitals of Countries.csv"))
         using (var reader = new StreamReader(fs))
         {
