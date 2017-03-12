@@ -7,7 +7,7 @@ using UnityEngine;
 public class CountryLocation : MonoBehaviour {
     float PI = 3.1415F;
 	public Dictionary<string, List<float>> countries = new Dictionary<string, List<float>>();
-
+	// For each item in dict <name of country> -> [lat, long, size in km^2, min lat, max lat, min long, max long]
     public void NotANormalWord () {
 		Debug.Log("I AM DOING THINGS TOO");
         using (var fs = File.OpenRead("../Data/Lat and Long of Capitals of Countries.csv"))
