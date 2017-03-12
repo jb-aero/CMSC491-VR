@@ -6,17 +6,17 @@ using UnityEngine;
 
 public class CountryLocation : MonoBehaviour {
     float PI = 3.1415F;
-    public Dictionary<string, List<float>> countries = new Dictionary<string, List<float>>();
-    // Use this for initialization
-    void Start () {
-        
-        using (var fs = File.OpenRead("Lat and Long of Capitals of Countries.csv"))
+	public Dictionary<string, List<float>> countries = new Dictionary<string, List<float>>();
+
+    public void NotANormalWord () {
+		Debug.Log("I AM DOING THINGS TOO");
+        using (var fs = File.OpenRead("../Data/Lat and Long of Capitals of Countries.csv"))
         using (var reader = new StreamReader(fs))
         {
             //First read in the file with the lat and long
             var line = reader.ReadLine();
             var values = line.Split(',');
-            if(values[0] != "Country")
+            if(values[0] != "Country Name")
             {
                 string key = values[0];
                 List<float> grooveList = new List<float>();
@@ -27,12 +27,14 @@ public class CountryLocation : MonoBehaviour {
 
         }
 
-        using (var fs = File.OpenRead("CountriesLandAreafromWikipedia.csv"))
+        using (var fs = File.OpenRead("../Data/CountriesLandAreafromWikipedia.csv"))
         using (var reader = new StreamReader(fs))
         {
             List<float> tempList = new List<float>();
             var line = reader.ReadLine();
-            var values = line.Split(',');
+			var values = line.Split(',');
+			Debug.Log ("Values is null? " + (values == null));
+			Debug.Log ("templist is null? " + (tempList == null));
             if(countries.TryGetValue(values[0], out tempList))
             {
                 //The country was in the dictionary, so now we add the size to the list
