@@ -19,8 +19,9 @@ public class ObjectPlacer : MonoBehaviour {
             {
                 Debug.Log(entry.Key + ", num items: " + entry.Value.Count);
             }
-			Debug.Log (entry.Key + ", lat: " + entry.Value[0] + ", long: " + entry.Value[1]);
-			GameObject.Instantiate(prefab, Vector3.zero, Quaternion.Euler(new Vector3(0, entry.Value[1], entry.Value[0])));
+			Debug.Log (entry.Key + ", lat: " + entry.Value[1] + ", long: " + entry.Value[2]);
+			GameObject marker = GameObject.Instantiate(prefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -entry.Value[2], entry.Value[1])));
+            marker.name = entry.Key;
         }
 		Debug.Log ("THINGS HAVE BEEN DONE");
 	}
