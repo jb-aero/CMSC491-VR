@@ -50,8 +50,8 @@ Comoros,-12.1667,44.25
 Congo,-1,15
 Cook Islands,-21.2333,-159.7667
 Costa Rica,10,-84
-Cote D'Ivoire (Ivory Coast),8,-5
-Croatia (Hrvatska),45.1667,15.5
+Ivory Coast,8,-5
+Croatia,45.1667,15.5
 Cuba,21.5,-80
 Cyprus,35,33
 Czech Republic,49.75,15.5
@@ -107,8 +107,8 @@ Jordan,31,36
 Kazakhstan,48,68
 Kenya,1,38
 Kiribati,1.4167,173
-Korea (North),40,127
-Korea (South),37,127.5
+North Korea,40,127
+South Korea,37,127.5
 Kuwait,29.3375,47.6581
 Kyrgyzstan,41,75
 Laos,18,105
@@ -169,7 +169,7 @@ Puerto Rico,18.25,-66.5
 Qatar,25.5,51.25
 Reunion,-21.1,55.6
 Romania,46,25
-Russian Federation,60,100
+Russia,60,100
 Rwanda,-2,30
 Saint Helena,-15.9333,-5.7
 Saint Kitts and Nevis,17.3333,-62.75
@@ -184,7 +184,7 @@ Senegal,14,-14
 Seychelles,-4.5833,55.6667
 Sierra Leone,8.5,-11.5
 Singapore,1.3667,103.8
-Slovak Republic,48.6667,19.5
+Slovakia,48.6667,19.5
 Slovenia,46,15
 Solomon Islands,-8,159
 Somalia,10,49
@@ -223,11 +223,15 @@ Vanuatu,-16,167
 Vatican City,41.9,12.45
 Venezuela,8,-66
 Vietnam,16,106
-Virgin Islands (British),18.3333,-64.8333
+Virgin Islands ,18.3333,-64.8333
 Wallis and Futuna Islands,-13.3,-176.2
 Western Sahara,24.5,-13
 Yemen,15,48
 Yugoslavia,14.4832908,121.021382
-Zaire,-20,30
+Democratic Republic of Congo,-20,30
 Zambia,-15,30
 Zimbabwe,19.0154,29.1549
+Libya,26.3341,17.2283
+Serbia,44.0165,21.0059
+East Timor,8.8742,125.7275
+Montenegro,42.7087,19.3744

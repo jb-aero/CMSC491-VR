@@ -7,47 +7,43 @@ using UnityEngine;
 public class CountryLocation : MonoBehaviour {
     float PI = 3.1415F;
 	public Dictionary<string, List<float>> countries = new Dictionary<string, List<float>>();
-	// For each item in dict <name of country> -> [lat, long, size in km^2, min lat, max lat, min long, max long]
+    // For each item in dict <name of country> -> [size in km^2, lat, long,  min lat, max lat, min long, max long]
     public void NotANormalWord () {
 		Debug.Log("I AM DOING THINGS TOO");
-        using (var fs = File.OpenRead("../Data/Lat and Long of Capitals of Countries.csv"))
+        using (var fs = File.OpenRead("../Data/CountriesLandAreafromWikipedia.csv"))
         using (var reader = new StreamReader(fs))
         {
-            //First read in the file with the lat and long
-            string line;
+            
+            string line = "";
             while ((line = reader.ReadLine()) != null)
             {
-
-                //Debug.Log(line);
                 var values = line.Split(',');
-                if (values[0] != "Country Name")
+                string key = values[0];
+                if (key != "Country" && key != "Total")
                 {
-                    string key = values[0];
                     List<float> grooveList = new List<float>();
+                    //Debug.Log("Values is null? " + (values == null));
+                    //Debug.Log("templist is null? " + (tempList == null));
                     grooveList.Add(float.Parse(values[1]));
-                    grooveList.Add(float.Parse(values[2]));
                     countries.Add(key, grooveList);
+                    //Add the size to the dictionary
+                    
                 }
             }
-
         }
-
-        using (var fs = File.OpenRead("../Data/CountriesLandAreafromWikipedia.csv"))
+        using (var fs = File.OpenRead("../Data/Lat and Long of Capitals of Countries.csv"))
         using (var reader = new StreamReader(fs))
         {
             List<float> tempList = new List<float>();
             string line = "";
             while ((line = reader.ReadLine()) != null)
             {
-
                 var values = line.Split(',');
-                Debug.Log("Values is null? " + (values == null));
-                Debug.Log("templist is null? " + (tempList == null));
                 if (countries.TryGetValue(values[0], out tempList))
                 {
-                    //The country was in the dictionary, so now we add the size to the list
-                    float size = float.Parse(values[1]);
-                    tempList.Add(size);
+                    tempList.Add(float.Parse(values[1]));
+                    tempList.Add(float.Parse(values[2]));
+                    float size = tempList[0];
                     //Take 2*sqrt(SA/PI) to get diameter of country (assuming a circle)
                     float diameter = 2 * Mathf.Sqrt((size / PI));
                     //Take this / 40075 km which is diameter / circumference of the earth
@@ -80,11 +76,10 @@ public class CountryLocation : MonoBehaviour {
                     tempList.Add(minLong);
                     tempList.Add(maxLong);
                 }
+
             }
         }
-
-              
-
+        
     }
 
     // Update is called once per frame
