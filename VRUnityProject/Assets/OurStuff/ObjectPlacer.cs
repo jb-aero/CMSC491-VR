@@ -11,7 +11,9 @@ public class ObjectPlacer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Debug.Log ("LOOK WE ARE DOING THINGS");
+        markers = new Dictionary<string, GameObject>();
+
+        Debug.Log ("LOOK WE ARE DOING THINGS");
 		reader.NotANormalWord ();
         reader.dictionaryInception();
 
@@ -27,6 +29,7 @@ public class ObjectPlacer : MonoBehaviour {
 			GameObject marker = GameObject.Instantiate(prefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -entry.Value[2], entry.Value[1])));
             
             marker.name = entry.Key;
+
             
 			markers.Add(entry.Key, marker);
             

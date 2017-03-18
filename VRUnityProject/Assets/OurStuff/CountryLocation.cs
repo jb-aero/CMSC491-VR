@@ -59,10 +59,7 @@ public class CountryLocation : MonoBehaviour {
                         {
                             string year = headerList[index];
                             tempList2.Add(float.Parse(values[index+2]));
-                            if(tempDict == null)
-                            {
-                                Debug.Log("NOOOOOOOOO");
-                            }
+                            
                             tempDict.Add(year, tempList2);
                         }
                         countriesPollution.Add(key, tempDict);
