@@ -13,7 +13,9 @@ public class ObjectPlacer : MonoBehaviour {
 	void Start () {
 		Debug.Log ("LOOK WE ARE DOING THINGS");
 		reader.NotANormalWord ();
-		Debug.Log ("Size of our data: " + reader.countries.Count);
+        reader.whyWontYouWork();
+
+        Debug.Log ("Size of our data: " + reader.countries.Count);
 		foreach (KeyValuePair<string, List<float>> entry in reader.countries)
 		{
             int numItems = entry.Value.Count;
@@ -23,8 +25,11 @@ public class ObjectPlacer : MonoBehaviour {
             }
 			Debug.Log (entry.Key + ", lat: " + entry.Value[1] + ", long: " + entry.Value[2]);
 			GameObject marker = GameObject.Instantiate(prefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -entry.Value[2], entry.Value[1])));
+            
             marker.name = entry.Key;
+            
 			markers.Add(entry.Key, marker);
+            
         }
 		Debug.Log ("THINGS HAVE BEEN DONE");
 	}
