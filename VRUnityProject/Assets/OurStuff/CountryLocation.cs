@@ -26,10 +26,10 @@ public class CountryLocation : MonoBehaviour {
                 var values = line.Split(',');
                 Debug.Log(values[0]);
                 var key = values[0];
-                
+                Dictionary<string, List<float>> tempDict;
                 if (values[0] != "Country Name")
                 {
-                    Dictionary<string, List<float>> tempDict = new Dictionary<string, List<float>>();
+                    tempDict = new Dictionary<string, List<float>>();
                     //If we have already read in some values for this country
                     if (countriesPollution.TryGetValue(key, out tempDict))
                     {
@@ -52,12 +52,17 @@ public class CountryLocation : MonoBehaviour {
                     }
                     else
                     {
+                        tempDict = new Dictionary<string, List<float>>();
                         //If the country is not already in the dictionary, make the dictionary of year->data
                         List<float> tempList2 = new List<float>();
                         for (int index = 0; index < headerList.Count; index++)
                         {
                             string year = headerList[index];
                             tempList2.Add(float.Parse(values[index+2]));
+                            if(tempDict == null)
+                            {
+                                Debug.Log("NOOOOOOOOO");
+                            }
                             tempDict.Add(year, tempList2);
                         }
                         countriesPollution.Add(key, tempDict);
