@@ -6,15 +6,71 @@ using UnityEngine;
 
 public class CountryLocation : MonoBehaviour {
     float PI = 3.1415F;
-	public Dictionary<string, List<float>> countries = new Dictionary<string, List<float>>();
     // For each item in dict <name of country> -> [size in km^2, lat, long,  min lat, max lat, min long, max long]
-    public void NotANormalWord () {
-		Debug.Log("I AM DOING THINGS TOO");
+    public Dictionary<string, List<float>> countries = new Dictionary<string, List<float>>();
+    public Dictionary<string, List<float>> countriesTrees = new Dictionary<string, List<float>>();
+    public Dictionary<string, List<float>> countriesCO2 = new Dictionary<string, List<float>>();
+    public Dictionary<string, List<float>> countriesElectricity = new Dictionary<string, List<float>>();
+    public void whyWontYouWork()
+    {
+        using (var fs = File.OpenRead("../Data/reduced_compiled_data.csv"))
+        using (var reader = new StreamReader(fs))
+        {
+            string line = "";
+            while ((line = reader.ReadLine()) != null)
+            {
+                var values = line.Split(',');
+                Debug.Log(values[0]);
+                var key = values[0];
+                if(values[0] != "Country Name")
+                {
+                    
+                    if(values[1] == "Forest area (% of land area)")
+                    {
+                        List<float> grooveList = new List<float>();
+                        for (int i = 2; i < 25; i++)
+                        {
+                            //Read in the forest area by year
+                            grooveList.Add(float.Parse(values[i]));
+                        }
+                        countriesTrees.Add(key, grooveList);
+
+                    }
+                    else if (values[1] == "CO2 emissions")
+                    {
+                        List<float> grooveList = new List<float>();
+                        for (int i = 2; i < 25; i++)
+                        {
+                            //Read in the forest area by year
+                            grooveList.Add(float.Parse(values[i]));
+                        }
+                        countriesCO2.Add(key, grooveList);
+
+                    }
+                    else
+                    {
+                        List<float> grooveList = new List<float>();
+                        for (int i = 2; i < 25; i++)
+                        {
+                            //Read in the forest area by year
+                            grooveList.Add(float.Parse(values[i]));
+                        }
+                        countriesElectricity.Add(key, grooveList);
+                    }
+                }
+
+            }
+        }
+    }
+
+    public void NotANormalWord() {
+        Debug.Log("I AM DOING THINGS TOO");
         using (var fs = File.OpenRead("../Data/CountriesLandAreafromWikipedia.csv"))
         using (var reader = new StreamReader(fs))
         {
-            
+
             string line = "";
+
             while ((line = reader.ReadLine()) != null)
             {
                 var values = line.Split(',');
@@ -22,12 +78,13 @@ public class CountryLocation : MonoBehaviour {
                 if (key != "Country" && key != "Total")
                 {
                     List<float> grooveList = new List<float>();
+
                     //Debug.Log("Values is null? " + (values == null));
                     //Debug.Log("templist is null? " + (tempList == null));
                     grooveList.Add(float.Parse(values[1]));
                     countries.Add(key, grooveList);
                     //Add the size to the dictionary
-                    
+
                 }
             }
         }
@@ -79,8 +136,12 @@ public class CountryLocation : MonoBehaviour {
 
             }
         }
-        
+
     }
+
+    
+        
+
 
     // Update is called once per frame
     void Update () {
