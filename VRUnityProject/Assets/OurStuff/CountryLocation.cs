@@ -20,7 +20,7 @@ public class CountryLocation : MonoBehaviour {
         using (var reader = new StreamReader(fs))
         {
             string line = "";
-            List<string> headerList = new List<string>();
+            List<string> headerList = new List<string>() { "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013" };
             while ((line = reader.ReadLine()) != null)
             {
                 var values = line.Split(',');
@@ -34,17 +34,17 @@ public class CountryLocation : MonoBehaviour {
                     if (countriesPollution.TryGetValue(key, out tempDict))
                     {
                         //If the country is already in the dictionary, get the dictionary of year->data
-                        for (int index = 2; index < headerList.Count; index++)
+                        for (int index = 0; index < headerList.Count; index++)
                         {
                             List<float> tempList = new List<float>();
                             if (tempDict.TryGetValue(headerList[index], out tempList))  
                             {
                                 //If this year already is in the dictionary for this country, add to this list
-                                tempList.Add(float.Parse(values[index]));
+                                tempList.Add(float.Parse(values[index+2]));
                             }
                             else
                             {
-                                tempList.Add(float.Parse(values[index]));
+                                tempList.Add(float.Parse(values[index+2]));
                                 tempDict.Add(headerList[index], tempList);
                             }
                         }
@@ -53,31 +53,17 @@ public class CountryLocation : MonoBehaviour {
                     else
                     {
                         //If the country is not already in the dictionary, make the dictionary of year->data
-                        for (int index = 2; index < headerList.Count; index++)
+                        List<float> tempList2 = new List<float>();
+                        for (int index = 0; index < headerList.Count; index++)
                         {
-                            List<float> tempList = new List<float>();
-                            if (tempDict.TryGetValue(headerList[index], out tempList))
-                            {
-                                //If this year already is in the dictionary for this country, add to this list
-                                tempList.Add(float.Parse(values[index]));
-                            }
-                            else
-                            {
-                                tempList.Add(float.Parse(values[index]));
-                                tempDict.Add(headerList[index], tempList);
-                            }
+                            string year = headerList[index];
+                            tempList2.Add(float.Parse(values[index+2]));
+                            tempDict.Add(year, tempList2);
                         }
                         countriesPollution.Add(key, tempDict);
                     }
                 }
-                else
-                {
-                    for(int i = 0; i < 25; i++)
-                    {
-                        headerList.Add(values[i]);
-                    }
-                   
-                }
+                
             }
         }
     }
