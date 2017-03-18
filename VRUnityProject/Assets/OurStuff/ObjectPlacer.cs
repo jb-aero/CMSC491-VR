@@ -13,7 +13,7 @@ public class ObjectPlacer : MonoBehaviour {
 	void Start () {
 		Debug.Log ("LOOK WE ARE DOING THINGS");
 		reader.NotANormalWord ();
-        reader.whyWontYouWork();
+        reader.dictionaryInception();
 
         Debug.Log ("Size of our data: " + reader.countries.Count);
 		foreach (KeyValuePair<string, List<float>> entry in reader.countries)

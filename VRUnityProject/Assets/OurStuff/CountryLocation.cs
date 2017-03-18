@@ -11,57 +11,78 @@ public class CountryLocation : MonoBehaviour {
     public Dictionary<string, List<float>> countriesTrees = new Dictionary<string, List<float>>();
     public Dictionary<string, List<float>> countriesCO2 = new Dictionary<string, List<float>>();
     public Dictionary<string, List<float>> countriesElectricity = new Dictionary<string, List<float>>();
-    public void whyWontYouWork()
+    //This dictionary holds the countries as keys. For each country, it has a dictionary. In that dictionary, the keys are years and the values are a list
+    //The pollution numbers are, in this order, [forest area %, CO2 emmisions, Electricity] A -1 indicates a missing value.
+    public Dictionary<string, Dictionary<string, List<float>>> countriesPollution = new Dictionary<string, Dictionary<string, List<float>>>();
+    public void dictionaryInception()
     {
         using (var fs = File.OpenRead("../Data/reduced_compiled_data.csv"))
         using (var reader = new StreamReader(fs))
         {
             string line = "";
+            List<string> headerList = new List<string>();
             while ((line = reader.ReadLine()) != null)
             {
                 var values = line.Split(',');
                 Debug.Log(values[0]);
                 var key = values[0];
-                if(values[0] != "Country Name")
+                
+                if (values[0] != "Country Name")
                 {
-                    
-                    if(values[1] == "Forest area (% of land area)")
+                    Dictionary<string, List<float>> tempDict = new Dictionary<string, List<float>>();
+                    //If we have already read in some values for this country
+                    if (countriesPollution.TryGetValue(key, out tempDict))
                     {
-                        List<float> grooveList = new List<float>();
-                        for (int i = 2; i < 25; i++)
+                        //If the country is already in the dictionary, get the dictionary of year->data
+                        for (int index = 2; index < headerList.Count; index++)
                         {
-                            //Read in the forest area by year
-                            grooveList.Add(float.Parse(values[i]));
+                            List<float> tempList = new List<float>();
+                            if (tempDict.TryGetValue(headerList[index], out tempList))  
+                            {
+                                //If this year already is in the dictionary for this country, add to this list
+                                tempList.Add(float.Parse(values[index]));
+                            }
+                            else
+                            {
+                                tempList.Add(float.Parse(values[index]));
+                                tempDict.Add(headerList[index], tempList);
+                            }
                         }
-                        countriesTrees.Add(key, grooveList);
-
-                    }
-                    else if (values[1] == "CO2 emissions")
-                    {
-                        List<float> grooveList = new List<float>();
-                        for (int i = 2; i < 25; i++)
-                        {
-                            //Read in the forest area by year
-                            grooveList.Add(float.Parse(values[i]));
-                        }
-                        countriesCO2.Add(key, grooveList);
-
+                        
                     }
                     else
                     {
-                        List<float> grooveList = new List<float>();
-                        for (int i = 2; i < 25; i++)
+                        //If the country is not already in the dictionary, make the dictionary of year->data
+                        for (int index = 2; index < headerList.Count; index++)
                         {
-                            //Read in the forest area by year
-                            grooveList.Add(float.Parse(values[i]));
+                            List<float> tempList = new List<float>();
+                            if (tempDict.TryGetValue(headerList[index], out tempList))
+                            {
+                                //If this year already is in the dictionary for this country, add to this list
+                                tempList.Add(float.Parse(values[index]));
+                            }
+                            else
+                            {
+                                tempList.Add(float.Parse(values[index]));
+                                tempDict.Add(headerList[index], tempList);
+                            }
                         }
-                        countriesElectricity.Add(key, grooveList);
+                        countriesPollution.Add(key, tempDict);
                     }
                 }
-
+                else
+                {
+                    for(int i = 0; i < 25; i++)
+                    {
+                        headerList.Add(values[i]);
+                    }
+                   
+                }
             }
         }
     }
+
+    
 
     public void NotANormalWord() {
         Debug.Log("I AM DOING THINGS TOO");
