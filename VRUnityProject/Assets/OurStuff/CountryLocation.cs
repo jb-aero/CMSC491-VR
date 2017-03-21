@@ -16,6 +16,48 @@ public class CountryLocation : MonoBehaviour {
     public Dictionary<string, Dictionary<string, List<float>>> countriesPollution = new Dictionary<string, Dictionary<string, List<float>>>();
     public void dictionaryInception()
     {
+        float maxEmmission;
+        float maxElectricity;
+        //Read in the file and get the maximum CO2 emmision and electricity amount
+        using (var fs = File.OpenRead("../Data/reduced_compiled_data.csv"))
+        using (var reader = new StreamReader(fs))
+        {
+            string line = "";
+            maxElectricity = 0.0f;
+            maxEmmission = 0.0f;
+            List<string> headerList = new List<string>() { "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013" };
+            while ((line = reader.ReadLine()) != null)
+            {
+                var values = line.Split(',');
+                if(values[1] == "CO2 emissions")
+                {
+                    for(int i = 2; i < 25; i++)
+                    {
+                        float theNum = float.Parse(values[i]);
+                        if (theNum > maxEmmission)
+                        {
+                            maxEmmission = theNum;
+                        }
+                    }
+                }
+                if(values[1] == "Electric power consumption (kWh per capita)")
+                {
+                    for (int i = 2; i < 25; i++)
+                    {
+                        float theNum = float.Parse(values[i]);
+                        if (theNum > maxElectricity)
+                        {
+                            maxElectricity = theNum;
+                        }
+                    }
+                }
+            }
+        }
+
+        Debug.Log(maxEmmission);
+        Debug.Log(maxElectricity);
+
+
         using (var fs = File.OpenRead("../Data/reduced_compiled_data.csv"))
         using (var reader = new StreamReader(fs))
         {
@@ -36,15 +78,25 @@ public class CountryLocation : MonoBehaviour {
                         //If the country is already in the dictionary, get the dictionary of year->data
                         for (int index = 0; index < headerList.Count; index++)
                         {
+                            float theValue = float.Parse(values[index + 2]);
+                            if(values[1] == "CO2 emissions")
+                            {
+                                theValue = theValue / maxEmmission;
+                            }
+                            if(values[1] == "Electric power consumption (kWh per capita)")
+                            {
+                                theValue = theValue / maxElectricity;
+                            }
+
                             List<float> tempList = new List<float>();
                             if (tempDict.TryGetValue(headerList[index], out tempList))  
                             {
                                 //If this year already is in the dictionary for this country, add to this list
-                                tempList.Add(float.Parse(values[index+2]));
+                                tempList.Add(theValue);
                             }
                             else
                             {
-                                tempList.Add(float.Parse(values[index+2]));
+                                tempList.Add(theValue);
                                 tempDict.Add(headerList[index], tempList);
                             }
                         }
@@ -55,11 +107,21 @@ public class CountryLocation : MonoBehaviour {
                         tempDict = new Dictionary<string, List<float>>();
                         //If the country is not already in the dictionary, make the dictionary of year->data
                         List<float> tempList2 = new List<float>();
+
                         for (int index = 0; index < headerList.Count; index++)
                         {
                             string year = headerList[index];
-                            tempList2.Add(float.Parse(values[index+2]));
-                            
+                            float theValue = float.Parse(values[index + 2]);
+                            if (values[1] == "CO2 emissions")
+                            {
+                                theValue = theValue / maxEmmission;
+                            }
+                            if (values[1] == "Electric power consumption (kWh per capita)")
+                            {
+                                theValue = theValue / maxElectricity;
+                            }
+
+                            tempList2.Add(theValue);
                             tempDict.Add(year, tempList2);
                         }
                         countriesPollution.Add(key, tempDict);
