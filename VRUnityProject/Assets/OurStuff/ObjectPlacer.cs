@@ -18,7 +18,29 @@ public class ObjectPlacer : MonoBehaviour {
         reader.dictionaryInception();
 
         Debug.Log ("Size of our data: " + reader.countries.Count);
-		foreach (KeyValuePair<string, List<float>> entry in reader.countries)
+
+        foreach(KeyValuePair<string, Dictionary<string, List<float>>> entry in reader.countriesPollution)
+        {
+            string countryName = entry.Key;
+            
+            int numTrees = (int)(entry.Value["1990"][0]);
+            //Debug.Log(reader.countries[countryName][1]);
+            //Debug.Log(reader.countries[countryName][2]);
+            float latitude = reader.countries[countryName][1];
+            float longitude = reader.countries[countryName][2];
+            float radDeg = reader.countries[countryName][7];
+            for (int i = 0; i < numTrees; i ++)
+            {
+                float newLat = Random.Range(latitude - radDeg, latitude + radDeg);
+                float newLong = Random.Range(longitude - radDeg, longitude + radDeg);
+                GameObject marker = GameObject.Instantiate(prefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -newLat, newLong)));
+                marker.name = countryName;
+            }
+           
+            
+        }
+
+        /*foreach (KeyValuePair<string, List<float>> entry in reader.countries)
 		{
             int numItems = entry.Value.Count;
             if(numItems == 1)
@@ -33,8 +55,8 @@ public class ObjectPlacer : MonoBehaviour {
             
 			markers.Add(entry.Key, marker);
             
-        }
-		Debug.Log ("THINGS HAVE BEEN DONE");
+        }*/
+        Debug.Log ("THINGS HAVE BEEN DONE");
 	}
 	
 	// Update is called once per frame

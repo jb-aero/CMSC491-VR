@@ -6,11 +6,8 @@ using UnityEngine;
 
 public class CountryLocation : MonoBehaviour {
     float PI = 3.1415F;
-    // For each item in dict <name of country> -> [size in km^2, lat, long,  min lat, max lat, min long, max long]
+    // For each item in dict <name of country> -> [size in km^2, lat, long,  min lat, max lat, min long, max long, radius in degrees]
     public Dictionary<string, List<float>> countries = new Dictionary<string, List<float>>();
-    public Dictionary<string, List<float>> countriesTrees = new Dictionary<string, List<float>>();
-    public Dictionary<string, List<float>> countriesCO2 = new Dictionary<string, List<float>>();
-    public Dictionary<string, List<float>> countriesElectricity = new Dictionary<string, List<float>>();
     //This dictionary holds the countries as keys. For each country, it has a dictionary. In that dictionary, the keys are years and the values are a list
     //The pollution numbers are, in this order, [forest area %, CO2 emmisions, Electricity] A -1 indicates a missing value.
     public Dictionary<string, Dictionary<string, List<float>>> countriesPollution = new Dictionary<string, Dictionary<string, List<float>>>();
@@ -203,6 +200,7 @@ public class CountryLocation : MonoBehaviour {
                     tempList.Add(maxLat);
                     tempList.Add(minLong);
                     tempList.Add(maxLong);
+                    tempList.Add(degRange);
                 }
 
             }
