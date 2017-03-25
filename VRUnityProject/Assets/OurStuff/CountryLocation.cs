@@ -51,8 +51,8 @@ public class CountryLocation : MonoBehaviour {
             }
         }
 
-        Debug.Log(maxEmmission);
-        Debug.Log(maxElectricity);
+        //Debug.Log(maxEmmission);
+        //Debug.Log(maxElectricity);
 
 
         using (var fs = File.OpenRead("../Data/reduced_compiled_data.csv"))
@@ -63,7 +63,7 @@ public class CountryLocation : MonoBehaviour {
             while ((line = reader.ReadLine()) != null)
             {
                 var values = line.Split(',');
-                Debug.Log(values[0]);
+                //Debug.Log(values[0]);
                 var key = values[0];
                 Dictionary<string, List<float>> tempDict;
                 if (values[0] != "Country Name")
@@ -201,6 +201,8 @@ public class CountryLocation : MonoBehaviour {
                     tempList.Add(minLong);
                     tempList.Add(maxLong);
                     tempList.Add(degRange);
+                  
+                    Debug.Log(values[0] + " " + tempList[1] + " " + tempList[2]);
                 }
 
             }

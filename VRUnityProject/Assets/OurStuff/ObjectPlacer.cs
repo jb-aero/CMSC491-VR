@@ -24,17 +24,22 @@ public class ObjectPlacer : MonoBehaviour {
             string countryName = entry.Key;
             
             int numTrees = (int)(entry.Value["1990"][0]);
-            //Debug.Log(reader.countries[countryName][1]);
-            //Debug.Log(reader.countries[countryName][2]);
+
+            //Debug.Log(countryName);
+            //Debug.Log(reader.countries[countryName]);
+            
             float latitude = reader.countries[countryName][1];
             float longitude = reader.countries[countryName][2];
             float radDeg = reader.countries[countryName][7];
-            for (int i = 0; i < numTrees; i ++)
+            if (numTrees != -1)
             {
-                float newLat = Random.Range(latitude - radDeg, latitude + radDeg);
-                float newLong = Random.Range(longitude - radDeg, longitude + radDeg);
-                GameObject marker = GameObject.Instantiate(prefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -newLat, newLong)));
-                marker.name = countryName;
+                for (int i = 0; i < numTrees; i++)
+                {
+                    float newLat = Random.Range(latitude - radDeg, latitude + radDeg);
+                    float newLong = Random.Range(longitude - radDeg, longitude + radDeg);
+                    GameObject marker = GameObject.Instantiate(prefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -newLat, newLong)));
+                    marker.name = countryName + i.ToString();
+                }
             }
            
             
