@@ -34,19 +34,19 @@ public class CameraControl : MonoBehaviour {
 
 		pitch = Mathf.Clamp (pitch, -limits.upAngle, limits.downAngle);
 
-		cameraMount.rotation = Quaternion.Euler (pitch, yaw, 0);
+		cameraMount.rotation = Quaternion.Euler (0, yaw, pitch);
 
 		if (Input.GetKey ("page up"))
 		{
-			zoom += limits.zoomSpeed;
+			zoom -= limits.zoomSpeed;
 		}
 		else if (Input.GetKey ("page down"))
 		{
-			zoom -= limits.zoomSpeed;
+			zoom += limits.zoomSpeed;
 		}
 
-		zoom = Mathf.Clamp (zoom, -limits.farZoom, -limits.nearZoom);
+		zoom = Mathf.Clamp (zoom, limits.nearZoom, limits.farZoom);
 
-		camera.localPosition = new Vector3 (0, 0, zoom);
+		camera.localPosition = new Vector3 (zoom, 0, 0);
 	}
 }
