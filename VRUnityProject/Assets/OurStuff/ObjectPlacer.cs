@@ -6,8 +6,10 @@ public class ObjectPlacer : MonoBehaviour {
 
 	public CountryLocation reader;
 	public GameObject prefab;
+    public GameObject lightPrefab;
 	
 	private Dictionary<string, GameObject> markers;
+    private Dictionary<string, GameObject> lightMarkers;
 
 	// Use this for initialization
 	void Start () {
@@ -45,6 +47,16 @@ public class ObjectPlacer : MonoBehaviour {
 					GameObject marker = GameObject.Instantiate(prefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -newLong, newLat)));
                     marker.name = countryName + i.ToString();
                 }
+            }
+
+            float amountLight = (float)(entry.Value["1990"][2]);
+            if(amountLight != -1)
+            {
+               
+                GameObject lightMarker = GameObject.Instantiate(lightPrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude, latitude)));
+                Light countryLight = lightMarker.AddComponent<Light>();
+                countryLight.intensity = amountLight * 8.0f;
+                lightMarker.name = countryName;
             }
            
             
