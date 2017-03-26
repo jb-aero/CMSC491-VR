@@ -32,6 +32,10 @@ public class ObjectPlacer : MonoBehaviour {
             float longitude = reader.countries[countryName][2];
 
             float radDeg = reader.countries[countryName][7];
+            if(radDeg > 5)
+            {
+                radDeg = 5;
+            }
             if (numTrees != -1)
             {
                 for (int i = 0; i < numTrees; i++)
