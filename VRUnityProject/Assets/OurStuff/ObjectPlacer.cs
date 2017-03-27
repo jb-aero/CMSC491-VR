@@ -55,7 +55,9 @@ public class ObjectPlacer : MonoBehaviour {
                
                 GameObject lightMarker = GameObject.Instantiate(lightPrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude, latitude)));
                 Light countryLight = lightMarker.AddComponent<Light>();
-                countryLight.intensity = amountLight * 8.0f;
+                countryLight.intensity = 2F;//amountLight * 8.0f;
+                Color prettyColor = new Color(1F,1F-(amountLight/100.0F),0F);
+                countryLight.color = prettyColor;//.Lerp(255, (255 * amountLight), 255);
                 lightMarker.name = countryName;
             }
            
