@@ -57,6 +57,7 @@ public class ObjectPlacer : MonoBehaviour {
                 countryLight.intensity = 2F;//amountLight * 8.0f;
                 Color prettyColor = new Color(1F,1F-(amountLight/100.0F),0F);
                 countryLight.color = prettyColor;//.Lerp(255, (255 * amountLight), 255);
+                countryLight.range = 1000F * (radDeg/360F);
                 lightMarker.name = countryName;
             }
            
