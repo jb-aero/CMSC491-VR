@@ -59,7 +59,7 @@ public class ObjectPlacer : MonoBehaviour {
                     GameObject lightMarker = GameObject.Instantiate(lightPrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude, latitude)));
     				Light countryLight = lightMarker.GetComponentInChildren(typeof(Light)) as Light;
                     countryLight.intensity = 2F;//amountLight * 8.0f;
-                    Color prettyColor = new Color(1F,1F-(amountLight/100.0F),0F);
+                    Color prettyColor = new Color(1F,1F-(amountLight),0F);
                     countryLight.color = prettyColor;//.Lerp(255, (255 * amountLight), 255);
                     countryLight.range = 1000F * (radDeg/360F);
                     lightMarker.name = countryName;
@@ -85,32 +85,44 @@ public class ObjectPlacer : MonoBehaviour {
 
                 markerCube.name = countryName+"Legend";
                 Transform tOChild = markerCube.transform.GetChild(0); 
-                tOChild.localScale += new Vector3(10F,0.25F,0.25F);
+                tOChild.localScale += new Vector3(10F,0.1F,0.1F);
                 Debug.Log(countryName+":"+(float)(entry.Value["1990"][0])/10+" "+(float)(entry.Value["1990"][1])*10F+" "+(float)(entry.Value["1990"][2])*10F);
                 /*Now below we create three bars, one for each value scaled to be between 0 and 10*/
-                float amountLight = (float)(entry.Value["1990"][1])*10.0F;
+                float amountLight = (float)(entry.Value["1990"][1]);
                 //Debug.Log(amountLight);
                 float amountTrees = (float)(entry.Value["1990"][0])/10F;
                 float amountPoll = (float)(entry.Value["1990"][2])*10F;
 
                 if((float)(entry.Value["1990"][1]) != -1F)
                 {
+                    int power = 0;
+                    while(amountLight >= 10F)
+                    {
+                        power++;
+                        amountLight = amountLight/10F;
+                    }
 
-                    GameObject lightCube = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude+1F, latitude+1F)));
-                    lightCube.name = countryName+"Electricity";
-                    Transform tChild = lightCube.transform.GetChild(0); 
-                    tChild.localScale += new Vector3(amountLight,0.25F,0.25F);
-                    Renderer rend = lightCube.GetComponentInChildren<Renderer>();
-                    //Renderer rend = lightCube.GetComponent<Renderer>();
-                    rend.material.color = new Color(1.0F,1.0F,0F);
+                    GameObject lightCubePow = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude+1F, latitude+1F)));
+                    lightCubePow.name = countryName+"ElectricityPow";
+                    Transform tChild = lightCubePow.transform.GetChild(0); 
+                    tChild.localScale += new Vector3(power,0.1F,0.1F);
+                    Renderer rend = lightCubePow.GetComponentInChildren<Renderer>();
+                    rend.material.color = new Color(1.0F,0.5F,0F);
+
+                    GameObject lightCubeVal = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude, latitude+1F)));
+                    lightCubeVal.name = countryName+"ElectricityVal";
+                    tChild = lightCubeVal.transform.GetChild(0); 
+                    tChild.localScale += new Vector3(amountLight,0.1F,0.1F);
+                    rend = lightCubeVal.GetComponentInChildren<Renderer>();
+                    rend.material.color = new Color(1.0F,1F,0F);                    
                 }
 
                 if((float)(entry.Value["1990"][0]) != -1F)
                 {
-                    GameObject treeCube = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude-1F, latitude-1F)));
+                    GameObject treeCube = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude-1F, latitude)));
                     treeCube.name = countryName+"Trees";
                     Transform tChild = treeCube.transform.GetChild(0); 
-                    tChild.localScale += new Vector3(amountTrees,0.25F,0.25F);
+                    tChild.localScale += new Vector3(amountTrees,0.1F,0.1F);
                     Renderer rend = treeCube.GetComponentInChildren<Renderer>();
                     //Renderer rend = treeCube.GetComponent<Renderer>();
                     rend.material.color = new Color(0F,1.0F,0F);
@@ -118,13 +130,27 @@ public class ObjectPlacer : MonoBehaviour {
 
                 if((float)(entry.Value["1990"][2])!= -1F)
                 {
-                    GameObject pollCube = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude+1F, latitude-1F)));
-                    pollCube.name = countryName+"CO2";
-                    Transform tChild = pollCube.transform.GetChild(0); 
-                    tChild.localScale += new Vector3(amountPoll,0.25F,0.25F);
-                    Renderer rend = pollCube.GetComponentInChildren<Renderer>();
-                    //Renderer rend = pollCube.GetComponent<Renderer>();
-                    rend.material.color = new Color(1F,0.0F,1F);
+
+                    int power = 0;
+                    while(amountPoll >= 10F)
+                    {
+                        power++;
+                        amountPoll = amountPoll/10F;
+                    }
+
+                    GameObject pollCubePow = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude+1F, latitude)));
+                    pollCubePow.name = countryName+"CO2Pow";
+                    Transform tChild = pollCubePow.transform.GetChild(0); 
+                    tChild.localScale += new Vector3(power,0.175F,0.175F);
+                    Renderer rend = pollCubePow.GetComponentInChildren<Renderer>();
+                    rend.material.color = new Color(0F,0.0F,0.5F);
+
+                    GameObject pollCubeVal = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude, latitude)));
+                    pollCubeVal.name = countryName+"CO2Val";
+                    tChild = pollCubeVal.transform.GetChild(0); 
+                    tChild.localScale += new Vector3(amountPoll,0.175F,0.175F);
+                    rend = pollCubeVal.GetComponentInChildren<Renderer>();
+                    rend.material.color = new Color(0F,0.0F,1F);
                 }
                 
             }

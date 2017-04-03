@@ -16,6 +16,8 @@ public class CountryLocation : MonoBehaviour {
 
         List <float> maxElectList = new List<float>();
         List <float> maxCO2List = new List<float>();
+        //Use STD scaling to find outliers and 
+
         for(int i = 0; i < 24; i++)
         {
             maxElectList.Add(0F);
@@ -86,7 +88,7 @@ public class CountryLocation : MonoBehaviour {
 
                             //Debug.Log(values[1]);
                             
-                            if(values[1] == "CO2 emissions" && theValue != -1F)
+                            /*if(values[1] == "CO2 emissions" && theValue != -1F)
                             {
                                 theValue = theValue / (float)maxCO2List[index];
                                 if(theValue > 1F)
@@ -97,7 +99,7 @@ public class CountryLocation : MonoBehaviour {
                             if(values[1] == "Electric power consumption (kWh per capita)"  && theValue != -1F)
                             {
                                 theValue = theValue / (float)maxElectList[index];
-                            }
+                            }*/
                             //Debug.Log(theValue);
                             List<float> tempList = new List<float>();
                             if (tempDict.TryGetValue(headerList[index], out tempList))  
