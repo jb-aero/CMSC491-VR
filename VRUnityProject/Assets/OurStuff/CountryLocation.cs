@@ -13,15 +13,14 @@ public class CountryLocation : MonoBehaviour {
     public Dictionary<string, Dictionary<string, List<float>>> countriesPollution = new Dictionary<string, Dictionary<string, List<float>>>();
     public void dictionaryInception()
     {
-        float maxEmmission;
-        float maxElectricity;
+
+        float maxEmmission = 0.0F;
+        float maxElectricity = 0.0F;
         //Read in the file and get the maximum CO2 emmision and electricity amount
         using (var fs = File.OpenRead("../Data/reduced_compiled_data.csv"))
         using (var reader = new StreamReader(fs))
         {
             string line = "";
-            maxElectricity = 0.0f;
-            maxEmmission = 0.0f;
             List<string> headerList = new List<string>() { "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013" };
             while ((line = reader.ReadLine()) != null)
             {
@@ -82,6 +81,10 @@ public class CountryLocation : MonoBehaviour {
                             if(values[1] == "CO2 emissions" && theValue != -1F)
                             {
                                 theValue = theValue / (float)maxEmmission;
+                                if(theValue > 1F)
+                                {
+                                    Debug.Log(values[0]+" "+theValue);
+                                }
                             }
                             if(values[1] == "Electric power consumption (kWh per capita)"  && theValue != -1F)
                             {
@@ -126,7 +129,7 @@ public class CountryLocation : MonoBehaviour {
             }
         }
 
-        Debug.Log(countriesPollution);
+        //Debug.Log(countriesPollution);
 
     }
 
