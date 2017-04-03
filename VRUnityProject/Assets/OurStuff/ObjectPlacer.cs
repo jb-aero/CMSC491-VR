@@ -15,7 +15,7 @@ public class ObjectPlacer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         //This is the variable that controls which view we are looking at
-        bool rectangles = false;
+        bool rectangles = true;
         markers = new Dictionary<string, GameObject>();
 
         Debug.Log ("LOOK WE ARE DOING THINGS");
@@ -81,33 +81,43 @@ public class ObjectPlacer : MonoBehaviour {
                 /*So the idea here is to create a Legend for the cubes to compare to*/
                 /*We probably want this to have markings of some kind, or else change colors every 1 or 2 marks*/
 
-                GameObject markerCube = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude, latitude)));
+                GameObject markerCube = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude-1F, latitude+1F)));
                 markerCube.name = countryName+"Legend";
                 markerCube.transform.localScale += new Vector3(10F,0.25F,0.25F);
-
+                Debug.Log(countryName+":"+(float)(entry.Value["1990"][0])/10+" "+(float)(entry.Value["1990"][1])*100F+" "+(float)(entry.Value["1990"][2])*100F);
                 /*Now below we create three bars, one for each value scaled to be between 0 and 10*/
-                float amountLight = (float)(entry.Value["1990"][2])*10;
-                Debug.Log(amountLight);
-                float amountTrees = (float)(entry.Value["1990"][1])/10;
-                float amountPoll = (float)(entry.Value["1990"][3])*10;
+                float amountLight = (float)(entry.Value["1990"][1])*1000.0F;
+                //Debug.Log(amountLight);
+                float amountTrees = (float)(entry.Value["1990"][0])/10F;
+                float amountPoll = (float)(entry.Value["1990"][2])*1000F;
 
-                GameObject lightCube = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude, latitude)));
-                lightCube.name = countryName+"Electricity";
-                lightCube.transform.localScale += new Vector3(amountLight,0.25F,0.25F);
-                Renderer rend = lightCube.GetComponent<Renderer>();
-                rend.material.color = new Color(1.0F,1.0F,0F);
+                if((float)(entry.Value["1990"][1]) != -1F)
+                {
 
-                GameObject treeCube = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude, latitude)));
-                treeCube.name = countryName+"Trees";
-                treeCube.transform.localScale += new Vector3(amountTrees,0.25F,0.25F);
-                rend = treeCube.GetComponent<Renderer>();
-                rend.material.color = new Color(0F,1.0F,0F);
+                    GameObject lightCube = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude+1F, latitude+1F)));
+                    lightCube.name = countryName+"Electricity";
+                    lightCube.transform.localScale += new Vector3(amountLight,0.25F,0.25F);
+                    Renderer rend = lightCube.GetComponent<Renderer>();
+                    rend.material.color = new Color(1.0F,1.0F,0F);
+                }
 
-                GameObject pollCube = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude, latitude)));
-                pollCube.name = countryName+"CO2";
-                pollCube.transform.localScale += new Vector3(amountPoll,0.25F,0.25F);
-                rend = pollCube.GetComponent<Renderer>();
-                rend.material.color = new Color(0F,1.0F,0F);
+                if((float)(entry.Value["1990"][0]) != -1F)
+                {
+                    GameObject treeCube = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude-1F, latitude-1F)));
+                    treeCube.name = countryName+"Trees";
+                    treeCube.transform.localScale += new Vector3(amountTrees,0.25F,0.25F);
+                    Renderer rend = treeCube.GetComponent<Renderer>();
+                    rend.material.color = new Color(0F,1.0F,0F);
+                }
+
+                if((float)(entry.Value["1990"][2])!= -1F)
+                {
+                    GameObject pollCube = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude+1F, latitude-1F)));
+                    pollCube.name = countryName+"CO2";
+                    pollCube.transform.localScale += new Vector3(amountPoll,0.25F,0.25F);
+                    Renderer rend = pollCube.GetComponent<Renderer>();
+                    rend.material.color = new Color(1F,0.0F,1F);
+                }
                 
             }
             //Create four marker rectangles of 1.25, 1.5, 1.75, 2.0 heights

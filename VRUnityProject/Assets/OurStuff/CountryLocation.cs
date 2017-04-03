@@ -51,8 +51,8 @@ public class CountryLocation : MonoBehaviour {
             }
         }
 
-        //Debug.Log(maxEmmission);
-        //Debug.Log(maxElectricity);
+        Debug.Log("Max emission: "+maxEmmission);
+        Debug.Log("Max electricity: " + maxElectricity);
 
 
         using (var fs = File.OpenRead("../Data/reduced_compiled_data.csv"))
@@ -76,15 +76,18 @@ public class CountryLocation : MonoBehaviour {
                         for (int index = 0; index < headerList.Count; index++)
                         {
                             float theValue = float.Parse(values[index + 2]);
-                            if(values[1] == "CO2 emissions")
-                            {
-                                theValue = theValue / maxEmmission;
-                            }
-                            if(values[1] == "Electric power consumption (kWh per capita)")
-                            {
-                                theValue = theValue / maxElectricity;
-                            }
 
+                            //Debug.Log(values[1]);
+                            
+                            if(values[1] == "CO2 emissions" && theValue != -1F)
+                            {
+                                theValue = theValue / (float)maxEmmission;
+                            }
+                            if(values[1] == "Electric power consumption (kWh per capita)"  && theValue != -1F)
+                            {
+                                theValue = theValue / (float)maxElectricity;
+                            }
+                            //Debug.Log(theValue);
                             List<float> tempList = new List<float>();
                             if (tempDict.TryGetValue(headerList[index], out tempList))  
                             {
@@ -103,21 +106,16 @@ public class CountryLocation : MonoBehaviour {
                     {
                         tempDict = new Dictionary<string, List<float>>();
                         //If the country is not already in the dictionary, make the dictionary of year->data
-                        List<float> tempList2 = new List<float>();
+                        
 
                         for (int index = 0; index < headerList.Count; index++)
                         {
+                            List<float> tempList2 = new List<float>();
                             string year = headerList[index];
+                            //Debug.Log(key+" "+year+" "+values[1]);
                             float theValue = float.Parse(values[index + 2]);
-                            if (values[1] == "CO2 emissions")
-                            {
-                                theValue = theValue / maxEmmission;
-                            }
-                            if (values[1] == "Electric power consumption (kWh per capita)")
-                            {
-                                theValue = theValue / maxElectricity;
-                            }
-
+                           // Debug.Log(values[1]);
+                            //Debug.Log(theValue);
                             tempList2.Add(theValue);
                             tempDict.Add(year, tempList2);
                         }
@@ -127,6 +125,9 @@ public class CountryLocation : MonoBehaviour {
                 
             }
         }
+
+        Debug.Log(countriesPollution);
+
     }
 
     
@@ -202,7 +203,7 @@ public class CountryLocation : MonoBehaviour {
                     tempList.Add(maxLong);
                     tempList.Add(degRange);
                   
-                    Debug.Log(values[0] + " " + tempList[1] + " " + tempList[2]);
+                    //Debug.Log(values[0] + " " + tempList[1] + " " + tempList[2]);
                 }
 
             }
