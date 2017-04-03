@@ -14,8 +14,14 @@ public class CountryLocation : MonoBehaviour {
     public void dictionaryInception()
     {
 
-        float maxEmmission = 0.0F;
-        float maxElectricity = 0.0F;
+        List <float> maxElectList = new List<float>();
+        List <float> maxCO2List = new List<float>();
+        for(int i = 0; i < 24; i++)
+        {
+            maxElectList.Add(0F);
+            maxCO2List.Add(0F);
+        }
+        
         //Read in the file and get the maximum CO2 emmision and electricity amount
         using (var fs = File.OpenRead("../Data/reduced_compiled_data.csv"))
         using (var reader = new StreamReader(fs))
@@ -27,32 +33,34 @@ public class CountryLocation : MonoBehaviour {
                 var values = line.Split(',');
                 if(values[1] == "CO2 emissions")
                 {
-                    for(int i = 2; i < 25; i++)
+                    for(int i = 2; i < 26; i++)
                     {
                         float theNum = float.Parse(values[i]);
-                        if (theNum > maxEmmission)
+                        if (theNum > maxCO2List[i-2])
                         {
-                            maxEmmission = theNum;
+                            maxCO2List[i-2] = theNum;
                         }
                     }
                 }
                 if(values[1] == "Electric power consumption (kWh per capita)")
                 {
-                    for (int i = 2; i < 25; i++)
+                    for (int i = 2; i < 26; i++)
                     {
                         float theNum = float.Parse(values[i]);
-                        if (theNum > maxElectricity)
+                        if (theNum > maxElectList[i-2])
                         {
-                            maxElectricity = theNum;
+                            maxElectList[i-2] = theNum;
                         }
                     }
                 }
             }
         }
 
-        Debug.Log("Max emission: "+maxEmmission);
-        Debug.Log("Max electricity: " + maxElectricity);
-
+        /*for(int i = 0; i < 24; i++)
+        {
+            Debug.Log(maxElectList[i]+" "+maxCO2List[i]);
+        }*/
+        
 
         using (var fs = File.OpenRead("../Data/reduced_compiled_data.csv"))
         using (var reader = new StreamReader(fs))
@@ -80,7 +88,7 @@ public class CountryLocation : MonoBehaviour {
                             
                             if(values[1] == "CO2 emissions" && theValue != -1F)
                             {
-                                theValue = theValue / (float)maxEmmission;
+                                theValue = theValue / (float)maxCO2List[index];
                                 if(theValue > 1F)
                                 {
                                     Debug.Log(values[0]+" "+theValue);
@@ -88,7 +96,7 @@ public class CountryLocation : MonoBehaviour {
                             }
                             if(values[1] == "Electric power consumption (kWh per capita)"  && theValue != -1F)
                             {
-                                theValue = theValue / (float)maxElectricity;
+                                theValue = theValue / (float)maxElectList[index];
                             }
                             //Debug.Log(theValue);
                             List<float> tempList = new List<float>();

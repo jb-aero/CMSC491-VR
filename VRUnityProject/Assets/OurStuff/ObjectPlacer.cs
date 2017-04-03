@@ -86,12 +86,12 @@ public class ObjectPlacer : MonoBehaviour {
                 markerCube.name = countryName+"Legend";
                 Transform tOChild = markerCube.transform.GetChild(0); 
                 tOChild.localScale += new Vector3(10F,0.25F,0.25F);
-                //Debug.Log(countryName+":"+(float)(entry.Value["1990"][0])/10+" "+(float)(entry.Value["1990"][1])*100F+" "+(float)(entry.Value["1990"][2])*100F);
+                Debug.Log(countryName+":"+(float)(entry.Value["1990"][0])/10+" "+(float)(entry.Value["1990"][1])*10F+" "+(float)(entry.Value["1990"][2])*10F);
                 /*Now below we create three bars, one for each value scaled to be between 0 and 10*/
-                float amountLight = (float)(entry.Value["1990"][1])*100.0F;
+                float amountLight = (float)(entry.Value["1990"][1])*10.0F;
                 //Debug.Log(amountLight);
                 float amountTrees = (float)(entry.Value["1990"][0])/10F;
-                float amountPoll = (float)(entry.Value["1990"][2])*100F;
+                float amountPoll = (float)(entry.Value["1990"][2])*10F;
 
                 if((float)(entry.Value["1990"][1]) != -1F)
                 {
