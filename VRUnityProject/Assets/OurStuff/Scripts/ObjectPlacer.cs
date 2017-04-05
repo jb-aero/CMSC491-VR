@@ -9,6 +9,7 @@ public class ObjectPlacer : MonoBehaviour {
     public GameObject lightPrefab;
     public GameObject cubePrefab;
     public GameObject rulerPrefab;
+    public GameObject fogPrefab;
 	
 	private Dictionary<string, GameObject> markers;
     private Dictionary<string, GameObject> lightMarkers;
@@ -81,7 +82,26 @@ public class ObjectPlacer : MonoBehaviour {
                     //countryLight.range = 1000F * (radDeg/360F);
 					lightMarker.name = countryName+"_light";
                 }
-               
+
+               float amountCO2 = (float)(entry.Value["1990"][1]);
+               if(amountCO2 > 0F)
+                {
+                    float power = 0F;
+                    while(amountCO2 >= 10F)
+                    {
+                        power++;
+                        amountCO2 = amountCO2/10F;
+                    }
+
+                    Debug.Log (power);
+
+                    GameObject fogMarker = GameObject.Instantiate(fogPrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude, latitude)));
+                    Renderer rend = fogMarker.GetComponentInChildren<Renderer>();
+                    rend.material.SetFloat("_Pow", (power/10F)*4F);
+                    ParticleSystem aPart = fogMarker.GetComponentInChildren<ParticleSystem>();
+                    aPart.Play();
+                    fogMarker.name = countryName+"_CO2";
+                }
                 
             }
         }
