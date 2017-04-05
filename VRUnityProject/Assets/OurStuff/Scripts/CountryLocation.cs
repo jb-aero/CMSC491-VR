@@ -11,58 +11,9 @@ public class CountryLocation : MonoBehaviour {
     //This dictionary holds the countries as keys. For each country, it has a dictionary. In that dictionary, the keys are years and the values are a list
     //The pollution numbers are, in this order, [forest area %, CO2 emmisions, Electricity] A -1 indicates a missing value.
     public Dictionary<string, Dictionary<string, List<float>>> countriesPollution = new Dictionary<string, Dictionary<string, List<float>>>();
-	public List <float> maxElectList = new List<float>();
-	public List <float> maxCO2List = new List<float>();
     public void dictionaryInception()
     {
 
-        //Use STD scaling to find outliers and 
-
-        for(int i = 0; i < 24; i++)
-        {
-            maxElectList.Add(0F);
-            maxCO2List.Add(0F);
-        }
-        
-        //Read in the file and get the maximum CO2 emmision and electricity amount
-        using (var fs = File.OpenRead("../Data/reduced_compiled_data.csv"))
-        using (var reader = new StreamReader(fs))
-        {
-            string line = "";
-            List<string> headerList = new List<string>() { "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013" };
-            while ((line = reader.ReadLine()) != null)
-            {
-                var values = line.Split(',');
-                if(values[1] == "CO2 emissions")
-                {
-                    for(int i = 2; i < 26; i++)
-                    {
-                        float theNum = float.Parse(values[i]);
-                        if (theNum > maxCO2List[i-2])
-                        {
-                            maxCO2List[i-2] = theNum;
-                        }
-                    }
-                }
-                if(values[1] == "Electric power consumption (kWh per capita)")
-                {
-                    for (int i = 2; i < 26; i++)
-                    {
-                        float theNum = float.Parse(values[i]);
-                        if (theNum > maxElectList[i-2])
-                        {
-                            maxElectList[i-2] = theNum;
-                        }
-                    }
-                }
-            }
-        }
-
-        /*for(int i = 0; i < 24; i++)
-        {
-            Debug.Log(maxElectList[i]+" "+maxCO2List[i]);
-        }*/
-        
 
         using (var fs = File.OpenRead("../Data/reduced_compiled_data.csv"))
         using (var reader = new StreamReader(fs))
@@ -86,21 +37,7 @@ public class CountryLocation : MonoBehaviour {
                         {
                             float theValue = float.Parse(values[index + 2]);
 
-                            //Debug.Log(values[1]);
-                            
-                            /*if(values[1] == "CO2 emissions" && theValue != -1F)
-                            {
-                                theValue = theValue / (float)maxCO2List[index];
-                                if(theValue > 1F)
-                                {
-                                    Debug.Log(values[0]+" "+theValue);
-                                }
-                            }
-                            if(values[1] == "Electric power consumption (kWh per capita)"  && theValue != -1F)
-                            {
-                                theValue = theValue / (float)maxElectList[index];
-                            }*/
-                            //Debug.Log(theValue);
+                           
                             List<float> tempList = new List<float>();
                             if (tempDict.TryGetValue(headerList[index], out tempList))  
                             {
