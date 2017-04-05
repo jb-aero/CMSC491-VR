@@ -20,7 +20,7 @@ public class CameraControl : MonoBehaviour {
 	{
 		pitch = 0;
 		yaw = 0;
-		zoom = camera.position.z;
+		zoom = camera.position.x;
 	}
 	
 	// Update is called once per frame
@@ -28,25 +28,16 @@ public class CameraControl : MonoBehaviour {
 
 		float turnUD = Input.GetAxis ("Vertical");
 		float turnLR = Input.GetAxis ("Horizontal");
+		float zoomIO = Input.GetAxis ("Zoom");
 
 		yaw -= limits.leftRightSpeed * turnLR;
 		pitch += limits.upDownSpeed * turnUD;
+		zoom -= limits.zoomSpeed * zoomIO;
 
 		pitch = Mathf.Clamp (pitch, -limits.upAngle, limits.downAngle);
-
-		cameraMount.rotation = Quaternion.Euler (0, yaw, pitch);
-
-		if (Input.GetKey ("page up"))
-		{
-			zoom -= limits.zoomSpeed;
-		}
-		else if (Input.GetKey ("page down"))
-		{
-			zoom += limits.zoomSpeed;
-		}
-
 		zoom = Mathf.Clamp (zoom, limits.nearZoom, limits.farZoom);
 
+		cameraMount.rotation = Quaternion.Euler (0, yaw, pitch);
 		camera.localPosition = new Vector3 (zoom, 0, 0);
 	}
 }
