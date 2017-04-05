@@ -8,6 +8,7 @@ public class ObjectPlacer : MonoBehaviour {
 	public GameObject prefab;
     public GameObject lightPrefab;
     public GameObject cubePrefab;
+    public GameObject rulerPrefab;
 	
 	private Dictionary<string, GameObject> markers;
     private Dictionary<string, GameObject> lightMarkers;
@@ -81,11 +82,11 @@ public class ObjectPlacer : MonoBehaviour {
                 /*So the idea here is to create a Legend for the cubes to compare to*/
                 /*We probably want this to have markings of some kind, or else change colors every 1 or 2 marks*/
 
-                GameObject markerCube = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude-1F, latitude+1F)));
+                GameObject markerCube = GameObject.Instantiate(rulerPrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude-1F, latitude+1F)));
 
                 markerCube.name = countryName+"Legend";
                 Transform tOChild = markerCube.transform.GetChild(0); 
-                tOChild.localScale += new Vector3(10F,0.1F,0.1F);
+                //tOChild.localScale += new Vector3(10F,0.1F,0.1F);
                 Debug.Log(countryName+":"+(float)(entry.Value["1990"][0])/10+" "+(float)(entry.Value["1990"][1])*10F+" "+(float)(entry.Value["1990"][2])*10F);
                 /*Now below we create three bars, one for each value scaled to be between 0 and 10*/
                 float amountLight = (float)(entry.Value["1990"][1]);
@@ -106,6 +107,7 @@ public class ObjectPlacer : MonoBehaviour {
                     lightCubePow.name = countryName+"ElectricityPow";
                     Transform tChild = lightCubePow.transform.GetChild(0); 
                     tChild.localScale += new Vector3(power,0.1F,0.1F);
+                    tChild.Translate(power/2F,0F,0F);
                     Renderer rend = lightCubePow.GetComponentInChildren<Renderer>();
                     rend.material.color = new Color(1.0F,0.5F,0F);
 
@@ -113,6 +115,7 @@ public class ObjectPlacer : MonoBehaviour {
                     lightCubeVal.name = countryName+"ElectricityVal";
                     tChild = lightCubeVal.transform.GetChild(0); 
                     tChild.localScale += new Vector3(amountLight,0.1F,0.1F);
+                    tChild.Translate(amountLight/2F,0F,0F);
                     rend = lightCubeVal.GetComponentInChildren<Renderer>();
                     rend.material.color = new Color(1.0F,1F,0F);                    
                 }
@@ -123,6 +126,7 @@ public class ObjectPlacer : MonoBehaviour {
                     treeCube.name = countryName+"Trees";
                     Transform tChild = treeCube.transform.GetChild(0); 
                     tChild.localScale += new Vector3(amountTrees,0.1F,0.1F);
+                    tChild.Translate(amountTrees/2F,0F,0F);
                     Renderer rend = treeCube.GetComponentInChildren<Renderer>();
                     //Renderer rend = treeCube.GetComponent<Renderer>();
                     rend.material.color = new Color(0F,1.0F,0F);
@@ -141,14 +145,16 @@ public class ObjectPlacer : MonoBehaviour {
                     GameObject pollCubePow = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude+1F, latitude)));
                     pollCubePow.name = countryName+"CO2Pow";
                     Transform tChild = pollCubePow.transform.GetChild(0); 
-                    tChild.localScale += new Vector3(power,0.175F,0.175F);
+                    tChild.localScale += new Vector3(power,0.1F,0.1F);
+                    tChild.Translate(power/2F,0F,0F);
                     Renderer rend = pollCubePow.GetComponentInChildren<Renderer>();
                     rend.material.color = new Color(0F,0.0F,0.5F);
 
                     GameObject pollCubeVal = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude, latitude)));
                     pollCubeVal.name = countryName+"CO2Val";
                     tChild = pollCubeVal.transform.GetChild(0); 
-                    tChild.localScale += new Vector3(amountPoll,0.175F,0.175F);
+                    tChild.localScale += new Vector3(amountPoll,0.1F,0.1F);
+                    tChild.Translate(amountPoll/2F,0F,0F);
                     rend = pollCubeVal.GetComponentInChildren<Renderer>();
                     rend.material.color = new Color(0F,0.0F,1F);
                 }
