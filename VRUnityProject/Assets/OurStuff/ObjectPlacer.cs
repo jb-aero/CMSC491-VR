@@ -13,10 +13,12 @@ public class ObjectPlacer : MonoBehaviour {
 	private Dictionary<string, GameObject> markers;
     private Dictionary<string, GameObject> lightMarkers;
 
+
+
 	// Use this for initialization
 	void Start () {
         //This is the variable that controls which view we are looking at
-        bool rectangles = true;
+        bool rectangles = false;
         markers = new Dictionary<string, GameObject>();
 
         Debug.Log ("LOOK WE ARE DOING THINGS");
@@ -54,16 +56,30 @@ public class ObjectPlacer : MonoBehaviour {
                     }
                 }
 
-                float amountLight = (float)(entry.Value["1990"][2]);
-                if(amountLight != -1)
+				float amountLight = (float)(entry.Value["1990"][2]);///reader.maxElectList[0]);
+                if(amountLight > 0F)
                 {
+					List<float> reds = new List<float>{255F,255F,255F,153F,51F,51F,51F,51F,51F,153F};
+					List<float> greens = new List<float>{51F,153F,255F,255F,255F,255F,255F,153F,51F,51F};
+					List<float> blues = new List<float>{51F,51F,51F,51F,51F,153F,255F,255F,255F,255F};
+					int power = 0;
+					while(amountLight >= 10F)
+					{
+						power++;
+						amountLight = amountLight/10F;
+					}
+
+					Debug.Log (power);
+
                     GameObject lightMarker = GameObject.Instantiate(lightPrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude, latitude)));
     				Light countryLight = lightMarker.GetComponentInChildren(typeof(Light)) as Light;
-                    countryLight.intensity = 2F;//amountLight * 8.0f;
-                    Color prettyColor = new Color(1F,1F-(amountLight),0F);
+					//countryLight.intensity = power;
+
+                    //amountLight * 8.0f;
+					Color prettyColor = new Color(reds[power]/255F,greens[power]/255F,blues[power]/255F);
                     countryLight.color = prettyColor;//.Lerp(255, (255 * amountLight), 255);
-                    countryLight.range = 1000F * (radDeg/360F);
-                    lightMarker.name = countryName;
+                    //countryLight.range = 1000F * (radDeg/360F);
+					lightMarker.name = countryName+"_light";
                 }
                
                 

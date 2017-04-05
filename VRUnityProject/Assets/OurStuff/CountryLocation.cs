@@ -11,11 +11,11 @@ public class CountryLocation : MonoBehaviour {
     //This dictionary holds the countries as keys. For each country, it has a dictionary. In that dictionary, the keys are years and the values are a list
     //The pollution numbers are, in this order, [forest area %, CO2 emmisions, Electricity] A -1 indicates a missing value.
     public Dictionary<string, Dictionary<string, List<float>>> countriesPollution = new Dictionary<string, Dictionary<string, List<float>>>();
+	public List <float> maxElectList = new List<float>();
+	public List <float> maxCO2List = new List<float>();
     public void dictionaryInception()
     {
 
-        List <float> maxElectList = new List<float>();
-        List <float> maxCO2List = new List<float>();
         //Use STD scaling to find outliers and 
 
         for(int i = 0; i < 24; i++)
