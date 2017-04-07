@@ -11,15 +11,15 @@ public class CountryLocation : MonoBehaviour {
     //This dictionary holds the countries as keys. For each country, it has a dictionary. In that dictionary, the keys are years and the values are a list
     //The pollution numbers are, in this order, [forest area %, CO2 emmisions, Electricity] A -1 indicates a missing value.
     public Dictionary<string, Dictionary<string, List<float>>> countriesPollution = new Dictionary<string, Dictionary<string, List<float>>>();
-    public void dictionaryInception()
+	// The years we have data for are also the headers of the datafiles
+	public List<string> headerList = new List<string>() { "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013" };
+
+	public void dictionaryInception()
     {
-
-
         using (var fs = File.OpenRead("../Data/reduced_compiled_data.csv"))
         using (var reader = new StreamReader(fs))
         {
             string line = "";
-            List<string> headerList = new List<string>() { "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013" };
             while ((line = reader.ReadLine()) != null)
             {
                 var values = line.Split(',');

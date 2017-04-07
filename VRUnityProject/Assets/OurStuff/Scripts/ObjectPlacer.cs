@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ObjectPlacer : MonoBehaviour {
 
@@ -11,6 +12,7 @@ public class ObjectPlacer : MonoBehaviour {
     public GameObject rulerPrefab;
     public GameObject fogPrefab;
     public GameObject rulerLight;
+	public Text yearText;
 	public int yearIndex;
     public bool barGraph_view;
     public int varToShow;
@@ -24,14 +26,14 @@ public class ObjectPlacer : MonoBehaviour {
         //This is the variable that controls which view we are looking at
         barGraph_view = true;
         varToShow = 1;//0 means trees, 1 is electricity, 2 is CO2
-        years = new List<string>{"1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013" };
         yearIndex = 0;
         oldYear = 0;
         markers = new Dictionary<string, List<GameObject>>();
 
         Debug.Log ("LOOK WE ARE DOING THINGS");
 		reader.NotANormalWord ();
-        reader.dictionaryInception();
+		reader.dictionaryInception();
+		years = reader.headerList;
 
         Debug.Log ("Size of our data: " + reader.countries.Count);
         if(barGraph_view == false)
@@ -81,6 +83,30 @@ public class ObjectPlacer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		if (Input.GetButtonDown ("LeftGrip"))
+		{
+			barGraph_view = !barGraph_view;
+		}
+
+		if (Input.GetButtonDown ("RightGrip"))
+		{
+			++varToShow;
+		}
+
+		if (Input.GetButtonDown ("RightDButton"))
+		{
+			++yearIndex;
+		}
+		else if (Input.GetButtonDown ("LeftDButton"))
+		{
+			--yearIndex;
+		}
+
+		varToShow %= 3;
+		yearIndex %= 24;
+		yearText.text = years [yearIndex];
+
         if(yearIndex != oldYear)
         {
     		if(barGraph_view == false)
