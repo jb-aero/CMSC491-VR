@@ -10,6 +10,7 @@ public class ObjectPlacer : MonoBehaviour {
     public GameObject cubePrefab;
     public GameObject rulerPrefab;
     public GameObject fogPrefab;
+    public GameObject rulerLight;
 	public int yearIndex;
     public bool barGraph_view;
     public int varToShow;
@@ -22,7 +23,7 @@ public class ObjectPlacer : MonoBehaviour {
 	void Start () {
         //This is the variable that controls which view we are looking at
         barGraph_view = true;
-        varToShow = 0;//0 means trees, 1 is electricity, 2 is CO2
+        varToShow = 1;//0 means trees, 1 is electricity, 2 is CO2
         years = new List<string>{"1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013" };
         yearIndex = 0;
         oldYear = 0;
@@ -227,8 +228,15 @@ public class ObjectPlacer : MonoBehaviour {
                 /*So the idea here is to create a Legend for the cubes to compare to*/
                 /*We probably want this to have markings of some kind, or else change colors every 1 or 2 marks*/
 
-                GameObject markerCube = GameObject.Instantiate(rulerPrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude-1F, latitude+1F)));
-
+                GameObject markerCube;
+                if(varToShow != 1)
+                { 
+                    markerCube= GameObject.Instantiate(rulerPrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude-1F, latitude+1F)));
+                }
+                else
+                {
+                    markerCube= GameObject.Instantiate(rulerLight, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude-1F, latitude+1F)));
+                }
                 markerCube.name = countryName+"Legend";
                 Transform tOChild = markerCube.transform.GetChild(0); 
                 //tOChild.localScale += new Vector3(10F,0.1F,0.1F);
@@ -257,14 +265,7 @@ public class ObjectPlacer : MonoBehaviour {
                         tChild.Translate(power/2F,0F,0F);
                         Renderer rend = lightCubePow.GetComponentInChildren<Renderer>();
                         rend.material.color = new Color(1.0F,0.5F,0F);
-
-                        GameObject lightCubeVal = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude, latitude+1F)));
-                        lightCubeVal.name = countryName+"ElectricityVal";
-                        tChild = lightCubeVal.transform.GetChild(0); 
-                        tChild.localScale += new Vector3(amountLight,0.1F,0.1F);
-                        tChild.Translate(amountLight/2F,0F,0F);
-                        rend = lightCubeVal.GetComponentInChildren<Renderer>();
-                        rend.material.color = new Color(1.0F,1F,0F);                    
+                
                     }
                 }
                 else if (varToShow == 0)
@@ -301,13 +302,6 @@ public class ObjectPlacer : MonoBehaviour {
                         Renderer rend = pollCubePow.GetComponentInChildren<Renderer>();
                         rend.material.color = new Color(0F,0.0F,0.5F);
 
-                        GameObject pollCubeVal = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude, latitude)));
-                        pollCubeVal.name = countryName+"CO2Val";
-                        tChild = pollCubeVal.transform.GetChild(0); 
-                        tChild.localScale += new Vector3(amountPoll,0.1F,0.1F);
-                        tChild.Translate(amountPoll/2F,0F,0F);
-                        rend = pollCubeVal.GetComponentInChildren<Renderer>();
-                        rend.material.color = new Color(0F,0.0F,1F);
                     }
                 }
             }
