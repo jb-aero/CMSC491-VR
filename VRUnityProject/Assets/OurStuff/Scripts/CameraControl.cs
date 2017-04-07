@@ -10,8 +10,8 @@ public class CameraLimits
 
 public class CameraControl : MonoBehaviour {
 
+	public Transform viewer;
 	public Transform cameraMount;
-	public Transform camera;
 
 	public CameraLimits limits;
 	private float pitch, yaw, zoom;
@@ -20,7 +20,7 @@ public class CameraControl : MonoBehaviour {
 	{
 		pitch = 0;
 		yaw = 0;
-		zoom = camera.position.x;
+		zoom = cameraMount.position.x;
 	}
 	
 	// Update is called once per frame
@@ -37,7 +37,7 @@ public class CameraControl : MonoBehaviour {
 		pitch = Mathf.Clamp (pitch, -limits.upAngle, limits.downAngle);
 		zoom = Mathf.Clamp (zoom, limits.nearZoom, limits.farZoom);
 
-		cameraMount.rotation = Quaternion.Euler (0, yaw, pitch);
-		camera.localPosition = new Vector3 (zoom, 0, 0);
+		viewer.rotation = Quaternion.Euler (0, yaw, pitch);
+		cameraMount.localPosition = new Vector3 (zoom, 0, 0);
 	}
 }
