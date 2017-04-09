@@ -111,7 +111,7 @@ Material:
       second: 0.02
     - first:
         name: _Pow
-      second: 5
+      second: 4
     - first:
         name: _Scale
       second: 0.6

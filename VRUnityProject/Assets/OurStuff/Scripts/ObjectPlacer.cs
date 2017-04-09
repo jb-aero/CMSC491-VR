@@ -13,9 +13,12 @@ public class ObjectPlacer : MonoBehaviour {
     public GameObject fogPrefab;
     public GameObject rulerLight;
 	public Text yearText;
+    public Text varText;
 	public int yearIndex;
     public bool barGraph_view;
     public int varToShow;
+
+    private List<string> variables = new List<string>{"% Forest Cover","Electricity Usage","CO2 Emissions"};
 
     //This is to hold the tree markers. Each country maps to a list of trees.
 	private Dictionary<string, List<GameObject> > markers;
@@ -112,6 +115,7 @@ public class ObjectPlacer : MonoBehaviour {
 		varToShow %= 3;
 		yearIndex %= 24;
 		yearText.text = years [yearIndex];
+        varText.text = variables[varToShow];
         //Check if the view, variable, and year have changed in that order
         if(wasBar != barGraph_view)
         {
@@ -288,7 +292,12 @@ public class ObjectPlacer : MonoBehaviour {
                         
                         Color prettyColor = new Color(reds[power]/255F,greens[power]/255F,blues[power]/255F);
                         countryLight.color = prettyColor;
-                        countryLight.range = 2F*(radDeg/3.6F);//Get the size as proportional to the country size
+                        float aRange = 2F*(radDeg/3.6F);
+                        if(aRange > 4F)
+                        {
+                            aRange = 4;
+                        }
+                        countryLight.range = aRange;//Get the size as proportional to the country size
                         lightMarker.name = countryName+"_light";
                     }
                 }
@@ -342,7 +351,7 @@ public class ObjectPlacer : MonoBehaviour {
                 /*We probably want this to have markings of some kind, or else change colors every 1 or 2 marks*/
 
                 GameObject markerCube;
-                if(varToShow != 1)
+                if(varToShow == 0)
                 { 
                     markerCube= GameObject.Instantiate(rulerPrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude-1F, latitude+1F)));
                 }
