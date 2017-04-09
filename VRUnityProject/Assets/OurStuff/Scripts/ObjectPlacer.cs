@@ -93,13 +93,13 @@ public class ObjectPlacer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (Input.GetButtonDown ("LeftGrip"))
+		if (Input.GetAxis ("LeftGrip") > 1)
 		{
 			Debug.Log ("Hit left grip.");
 			barGraph_view = !barGraph_view;
 		}
 
-		if (Input.GetButtonDown ("RightGrip"))
+		if (Input.GetAxis ("RightGrip") > 1)
 		{
 			Debug.Log ("Hit right grip so hard.");
 			++varToShow;
