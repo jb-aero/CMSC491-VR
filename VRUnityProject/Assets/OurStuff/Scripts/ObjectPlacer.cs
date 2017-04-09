@@ -33,6 +33,7 @@ public class ObjectPlacer : MonoBehaviour {
 
     //To detect a change
     private int oldYear;
+    private int lastTreeYear;
     private int oldVar;
     private bool wasBar;
 
@@ -58,6 +59,7 @@ public class ObjectPlacer : MonoBehaviour {
         varToShow = 1;//0 means trees, 1 is electricity, 2 is CO2
         yearIndex = 0;
         oldYear = 0;
+        lastTreeYear = 0;
         oldVar = varToShow;
         wasBar = barGraph_view;
         markers = new Dictionary<string, List<GameObject>>();
@@ -134,7 +136,13 @@ public class ObjectPlacer : MonoBehaviour {
             else{
                 if(varToShow == 0)
                 {
-                    drawTreesFromScratch();
+                    if(markers.Keys.ToList().Count == 0)
+                    { 
+                        drawTreesFromScratch();
+                    }
+                    else{
+                        updateTrees();
+                    }
                 }
                 else
                 {
@@ -149,7 +157,14 @@ public class ObjectPlacer : MonoBehaviour {
             {
                 //Delete the CO2 and light values, and draw the trees
                 clearHouse();
-                drawTreesFromScratch();
+
+                if(markers.Keys.ToList().Count == 0)
+                    { 
+                        drawTreesFromScratch();
+                    }
+                    else{
+                        updateTrees();
+                    }
             }
             else if(oldVar == 0)
             {
@@ -175,49 +190,7 @@ public class ObjectPlacer : MonoBehaviour {
             {
                 if(varToShow == 0)
                 {
-                    foreach(KeyValuePair<string, Dictionary<string, List<float>>> entry in reader.countriesPollution)
-                    {
-                        //Get num trees in new year. 
-                        int amountTreesOld = (int)(entry.Value[years[oldYear]][0]);
-                        int amountTrees = (int)(entry.Value[years[yearIndex]][0]);
-                        //If it is less than old, remove some trees from the scene and from the dictionary
-                        if(amountTrees < amountTreesOld)
-                        {
-                            int numToRemove = amountTreesOld - amountTrees;
-                            //Get the list of trees from the dictionary
-                            List<GameObject> tempList = new List<GameObject>();
-                            if (markers.TryGetValue(entry.Key, out tempList))
-                            {
-                                for(int i = 0; i < numToRemove; i++)
-                                {
-                                    GameObject aTree = tempList[0];
-                                    tempList.RemoveAt(0);
-                                    Destroy(aTree);
-                                }
-                            }
-                        }
-                        //If it is more, make some new trees and add them to the dictionary and scene
-                        if(amountTrees > amountTreesOld)
-                        {
-                            int numToAdd = amountTrees - amountTreesOld;
-                            List<GameObject> tempList = new List<GameObject>();
-                            if (markers.TryGetValue(entry.Key, out tempList))
-                            {
-                                string countryName = entry.Key;
-                                float latitude = reader.countries[countryName][1];
-                                float longitude = reader.countries[countryName][2];
-                                float radDeg = reader.countries[countryName][7];
-                                for(int i = 0; i < numToAdd; i++)
-                                {
-                                    float newLat = Random.Range(latitude - radDeg, latitude + radDeg);
-                                    float newLong = Random.Range(longitude - radDeg, longitude + radDeg);
-                                    GameObject marker = GameObject.Instantiate(prefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -newLong, newLat)));
-                                    marker.name = countryName + (i+amountTreesOld).ToString();
-                                    tempList.Add(marker);
-                                }
-                            }
-                        }
-                    }
+                    updateTrees();
                 }
                 else if(varToShow == 1)
                 {
@@ -523,12 +496,72 @@ public class ObjectPlacer : MonoBehaviour {
                                 while(tempList.Count > 0)
                                 {
                                     GameObject aTree = tempList[0];
+                                    aTree.active = false;
+                                }
+                            }
+                    }
+
+    }
+
+
+    function updateTrees()
+    {
+        foreach(KeyValuePair<string, List<GameObject>> entry in markers)
+                    {
+                        List<GameObject> tempList = new List<GameObject>();
+                        if (markers.TryGetValue(entry.Key, out tempList))
+                            {
+                                while(tempList.Count > 0)
+                                {
+                                    GameObject aTree = tempList[0];
+                                    aTree.active = true;
+                                }
+                            }
+                    }
+        foreach(KeyValuePair<string, Dictionary<string, List<float>>> entry in reader.countriesPollution)
+                    {
+                        //Get num trees in new year. 
+                        int amountTreesOld = (int)(entry.Value[years[lastTreeYear]][0]);
+                        int amountTrees = (int)(entry.Value[years[yearIndex]][0]);
+                        //If it is less than old, remove some trees from the scene and from the dictionary
+                        if(amountTrees < amountTreesOld)
+                        {
+                            int numToRemove = amountTreesOld - amountTrees;
+                            //Get the list of trees from the dictionary
+                            List<GameObject> tempList = new List<GameObject>();
+                            if (markers.TryGetValue(entry.Key, out tempList))
+                            {
+                                for(int i = 0; i < numToRemove; i++)
+                                {
+                                    GameObject aTree = tempList[0];
                                     tempList.RemoveAt(0);
                                     Destroy(aTree);
                                 }
                             }
-                            markers.Remove(entry.Key);
+                        }
+                        //If it is more, make some new trees and add them to the dictionary and scene
+                        if(amountTrees > amountTreesOld)
+                        {
+                            int numToAdd = amountTrees - amountTreesOld;
+                            List<GameObject> tempList = new List<GameObject>();
+                            if (markers.TryGetValue(entry.Key, out tempList))
+                            {
+                                string countryName = entry.Key;
+                                float latitude = reader.countries[countryName][1];
+                                float longitude = reader.countries[countryName][2];
+                                float radDeg = reader.countries[countryName][7];
+                                for(int i = 0; i < numToAdd; i++)
+                                {
+                                    float newLat = Random.Range(latitude - radDeg, latitude + radDeg);
+                                    float newLong = Random.Range(longitude - radDeg, longitude + radDeg);
+                                    GameObject marker = GameObject.Instantiate(prefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -newLong, newLat)));
+                                    marker.name = countryName + (i+amountTreesOld).ToString();
+                                    tempList.Add(marker);
+                                }
+                            }
+                        }
+                        
                     }
-
+                    lastTreeYear = yearIndex;
     }
 }
