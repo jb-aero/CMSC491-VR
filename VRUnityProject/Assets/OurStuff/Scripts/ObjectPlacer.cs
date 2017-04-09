@@ -95,19 +95,21 @@ public class ObjectPlacer : MonoBehaviour {
 
 		if (Input.GetButtonDown ("LeftGrip"))
 		{
+			Debug.Log ("Hit left grip.");
 			barGraph_view = !barGraph_view;
 		}
 
 		if (Input.GetButtonDown ("RightGrip"))
 		{
+			Debug.Log ("Hit right grip.");
 			++varToShow;
 		}
 
-		if (Input.GetButtonDown ("RightDButton"))
+		if (Input.GetButtonDown ("RightMenuButton"))
 		{
 			++yearIndex;
 		}
-		else if (Input.GetButtonDown ("LeftDButton"))
+		else if (Input.GetButtonDown ("LeftMenuButton"))
 		{
 			--yearIndex;
 		}
