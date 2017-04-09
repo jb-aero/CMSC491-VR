@@ -136,7 +136,7 @@ public class ObjectPlacer : MonoBehaviour {
             else{
                 if(varToShow == 0)
                 {
-                    if(markers.Keys.ToList().Count == 0)
+                    if(markers.Keys.Count == 0)
                     { 
                         drawTreesFromScratch();
                     }
@@ -158,7 +158,7 @@ public class ObjectPlacer : MonoBehaviour {
                 //Delete the CO2 and light values, and draw the trees
                 clearHouse();
 
-                if(markers.Keys.ToList().Count == 0)
+                if(markers.Keys.Count == 0)
                     { 
                         drawTreesFromScratch();
                     }
@@ -493,9 +493,9 @@ public class ObjectPlacer : MonoBehaviour {
                         List<GameObject> tempList = new List<GameObject>();
                         if (markers.TryGetValue(entry.Key, out tempList))
                             {
-                                while(tempList.Count > 0)
+                                for(int t = 0; t < tempList.Count; t++)
                                 {
-                                    GameObject aTree = tempList[0];
+                                    GameObject aTree = tempList[t];
                                     aTree.active = false;
                                 }
                             }
@@ -504,16 +504,16 @@ public class ObjectPlacer : MonoBehaviour {
     }
 
 
-    function updateTrees()
+    void updateTrees()
     {
         foreach(KeyValuePair<string, List<GameObject>> entry in markers)
                     {
                         List<GameObject> tempList = new List<GameObject>();
                         if (markers.TryGetValue(entry.Key, out tempList))
                             {
-                                while(tempList.Count > 0)
+                                for(int t = 0; t < tempList.Count; t++)
                                 {
-                                    GameObject aTree = tempList[0];
+                                    GameObject aTree = tempList[t];
                                     aTree.active = true;
                                 }
                             }
