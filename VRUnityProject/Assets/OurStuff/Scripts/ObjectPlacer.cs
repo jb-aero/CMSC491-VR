@@ -276,9 +276,13 @@ public class ObjectPlacer : MonoBehaviour {
                     float amountLight = (float)(entry.Value[years[yearIndex]][2]);///reader.maxElectList[0]);
                     if(amountLight > 0F)
                     {
-                        List<float> reds = new List<float>{255F,255F,255F,153F,51F,51F,51F,51F,51F,153F};
-                        List<float> greens = new List<float>{51F,153F,255F,255F,255F,255F,255F,153F,51F,51F};
-                        List<float> blues = new List<float>{51F,51F,51F,51F,51F,153F,255F,255F,255F,255F};
+                        //List<float> reds = new List<float>{255F,255F,255F,153F,51F,51F,51F,51F,51F,153F};
+                        //List<float> greens = new List<float>{51F,153F,255F,255F,255F,255F,255F,153F,51F,51F};
+                        //List<float> blues = new List<float>{51F,51F,51F,51F,51F,153F,255F,255F,255F,255F};
+
+                        List<float> reds =  new List<float>{0F,0F,128F,255F,255F,255F,255F};
+                        List<float> greens =  new List<float>{255F,255F,255F,255F,128F,64F,0F};
+                        List<float> blues =  new List<float>{128F,0F,0F,0F,0F,0F,0F};
                         int power = 0;
                         while(amountLight >= 10F)
                         {
