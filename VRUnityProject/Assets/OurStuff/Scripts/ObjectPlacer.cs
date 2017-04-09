@@ -244,11 +244,10 @@ public class ObjectPlacer : MonoBehaviour {
                                 amountCO2 = amountCO2/10F;
                             }
 
-                            //Transform tChild = temp.transform.GetChild(0); 
-                            //tChild.localScale = new Vector3(power,0.1F,0.1F);
-                            //tChild.Translate(power/2F,0F,0F);
-                            Renderer rend = temp.GetComponentInChildren<Renderer>();
-                            rend.material.color = new Color(CO2R[power]/255F,CO2G[power]/255F,CO2B[power]/255F);
+                        Renderer rend = temp.GetComponentInChildren<Renderer>();
+                        rend.material.SetFloat("_Pow", (power/10F)*4F);
+                        ParticleSystem aPart = temp.GetComponentInChildren<ParticleSystem>();
+                        
                     }
                     
                     
