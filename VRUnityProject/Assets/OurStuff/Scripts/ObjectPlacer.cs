@@ -101,7 +101,7 @@ public class ObjectPlacer : MonoBehaviour {
 
 		if (Input.GetButtonDown ("RightGrip"))
 		{
-			Debug.Log ("Hit right grip.");
+			Debug.Log ("Hit right grip so hard.");
 			++varToShow;
 		}
 
