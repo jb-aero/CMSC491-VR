@@ -17,6 +17,7 @@ public class ObjectPlacer : MonoBehaviour {
 	public int yearIndex;
     public bool barGraph_view;
     public int varToShow;
+	public float secPerChange;
 
     private List<string> variables = new List<string>{"% Forest Cover","Electricity Usage","CO2 Emissions"};
 
@@ -35,7 +36,8 @@ public class ObjectPlacer : MonoBehaviour {
     private int oldYear;
     private int lastTreeYear;
     private int oldVar;
-    private bool wasBar;
+	private bool wasBar;
+	private float lastVarChange;
 
     private List<string> years;
 
@@ -62,6 +64,7 @@ public class ObjectPlacer : MonoBehaviour {
         lastTreeYear = 0;
         oldVar = varToShow;
         wasBar = barGraph_view;
+		lastVarChange = 0;
         markers = new Dictionary<string, List<GameObject>>();
 
         Debug.Log ("LOOK WE ARE DOING THINGS");
@@ -107,13 +110,18 @@ public class ObjectPlacer : MonoBehaviour {
 			++varToShow;
 		}
 
-		if (Input.GetAxis ("Years") > 0)
+		if (lastVarChange < Time.time)
 		{
-			++yearIndex;
-		}
+			if (Input.GetAxis ("Years") > 0)
+			{
+				++yearIndex;
+				lastVarChange = Time.time + secPerChange;
+			}
 			else if (Input.GetAxis ("Years") < 0)
-		{
-			--yearIndex;
+			{
+				--yearIndex;
+				lastVarChange = Time.time + secPerChange;
+			}
 		}
 
         if(yearIndex < 0)
