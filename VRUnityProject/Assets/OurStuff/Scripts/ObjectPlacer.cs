@@ -562,6 +562,6 @@ public class ObjectPlacer : MonoBehaviour {
                         }
                         
                     }
-                    lastTreeYear = yearIndex;
+        lastTreeYear = yearIndex;
     }
 }
