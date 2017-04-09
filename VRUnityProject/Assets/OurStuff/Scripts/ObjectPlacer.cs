@@ -93,23 +93,23 @@ public class ObjectPlacer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (Input.GetAxis ("LeftTrigger") > 1)
+		if (Input.GetButtonDown ("RightMenuButton"))
 		{
 			Debug.Log ("Hit left trigger.");
 			barGraph_view = !barGraph_view;
 		}
 
-		if (Input.GetAxis ("RightTrigger") > 1)
+		if (Input.GetButtonDown ("LeftMenuButton"))
 		{
 			Debug.Log ("Hit right trigger so hard.");
 			++varToShow;
 		}
 
-		if (Input.GetButtonDown ("RightMenuButton"))
+		if (Input.GetAxis ("Years") > 0)
 		{
 			++yearIndex;
 		}
-		else if (Input.GetButtonDown ("LeftMenuButton"))
+			else if (Input.GetAxis ("Years") < 0)
 		{
 			--yearIndex;
 		}
