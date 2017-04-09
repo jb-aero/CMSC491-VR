@@ -112,6 +112,11 @@ public class ObjectPlacer : MonoBehaviour {
 			--yearIndex;
 		}
 
+        if(yearIndex < 0)
+        {
+            yearIndex += 24;
+        }
+
 		varToShow %= 3;
 		yearIndex %= 24;
 		yearText.text = years [yearIndex];
