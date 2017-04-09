@@ -592,6 +592,38 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4446160194950744, guid: 54569d6d264cbbc41ba78469b7c4e5c3, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446160194950744, guid: 54569d6d264cbbc41ba78469b7c4e5c3, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4446160194950744, guid: 54569d6d264cbbc41ba78469b7c4e5c3, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114449571327091488, guid: 54569d6d264cbbc41ba78469b7c4e5c3,
+        type: 2}
+      propertyPath: scale
+      value: 1.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 114449571327091488, guid: 54569d6d264cbbc41ba78469b7c4e5c3,
+        type: 2}
+      propertyPath: intensity
+      value: 0.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 114449571327091488, guid: 54569d6d264cbbc41ba78469b7c4e5c3,
+        type: 2}
+      propertyPath: alpha
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 114449571327091488, guid: 54569d6d264cbbc41ba78469b7c4e5c3,
+        type: 2}
+      propertyPath: pow
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 54569d6d264cbbc41ba78469b7c4e5c3, type: 2}
   m_IsPrefabParent: 0
@@ -784,31 +816,6 @@ Prefab:
       propertyPath: m_Name
       value: lightPrefab
       objectReference: {fileID: 0}
-    - target: {fileID: 108201558867789730, guid: 00a6c759207ad724182c26f95404c132,
-        type: 2}
-      propertyPath: m_RenderMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 108201558867789730, guid: 00a6c759207ad724182c26f95404c132,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 108201558867789730, guid: 00a6c759207ad724182c26f95404c132,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 108201558867789730, guid: 00a6c759207ad724182c26f95404c132,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 108201558867789730, guid: 00a6c759207ad724182c26f95404c132,
-        type: 2}
-      propertyPath: m_Intensity
-      value: 0.4
-      objectReference: {fileID: 0}
     - target: {fileID: 1099885423301754, guid: 00a6c759207ad724182c26f95404c132, type: 2}
       propertyPath: m_IsActive
       value: 0
@@ -858,6 +865,10 @@ Prefab:
     - target: {fileID: 1127863204859206, guid: b1c5421e1a67d174ea8d00585fdf7c61, type: 2}
       propertyPath: m_Name
       value: HeightMarker_Light
+      objectReference: {fileID: 0}
+    - target: {fileID: 1127863204859206, guid: b1c5421e1a67d174ea8d00585fdf7c61, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b1c5421e1a67d174ea8d00585fdf7c61, type: 2}
