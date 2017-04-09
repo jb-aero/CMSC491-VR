@@ -527,6 +527,7 @@ public class ObjectPlacer : MonoBehaviour {
                                     Destroy(aTree);
                                 }
                             }
+                            markers.Remove(entry.Key);
                     }
 
     }
