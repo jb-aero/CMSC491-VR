@@ -624,6 +624,11 @@ Prefab:
       propertyPath: pow
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 198447336803503632, guid: 54569d6d264cbbc41ba78469b7c4e5c3,
+        type: 2}
+      propertyPath: prewarm
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 54569d6d264cbbc41ba78469b7c4e5c3, type: 2}
   m_IsPrefabParent: 0

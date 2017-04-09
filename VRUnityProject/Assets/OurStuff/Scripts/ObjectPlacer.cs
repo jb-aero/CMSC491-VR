@@ -218,9 +218,30 @@ public class ObjectPlacer : MonoBehaviour {
                 else{
                     //Update the smog values but don't redraw them
                     //For each item in the list of fog
-                    //Get the name of the country from the name of the marker
-                    //Get the new value for that country depending on the new year
-                    //Change the variables in the fog marker to reflect that of the new amount
+                    for(int i = 0; i < listOfFog.Count;i++)
+                    {
+                            //Get the name of the country from the name of the marker
+                            GameObject temp = listOfFog[i];
+                            string countryName = temp.name.Substring(0,temp.name.Length - 4);
+                            //Get the new value for that country depending on the new year
+                            float amountCO2 = (float)(reader.countriesPollution[countryName][years[yearIndex]][1]);
+                            //Change the variables in the fog marker to reflect that of the new amount
+                            int power = 0;
+                            while(amountCO2 >= 10F)
+                            {
+                                power++;
+                                amountCO2 = amountCO2/10F;
+                            }
+
+                            //Transform tChild = temp.transform.GetChild(0); 
+                            //tChild.localScale = new Vector3(power,0.1F,0.1F);
+                            //tChild.Translate(power/2F,0F,0F);
+                            Renderer rend = temp.GetComponentInChildren<Renderer>();
+                            rend.material.color = new Color(CO2R[power]/255F,CO2G[power]/255F,CO2B[power]/255F);
+                    }
+                    
+                    
+                    
                     oldYear = yearIndex;
                 }
             }
@@ -284,7 +305,7 @@ public class ObjectPlacer : MonoBehaviour {
                             amountCO2 = amountCO2/10F;
                         }
 
-                        Debug.Log (power);
+                        //Debug.Log (power);
 
                         GameObject fogMarker = GameObject.Instantiate(fogPrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude, latitude)));
                         listOfFog.Add(fogMarker);
@@ -391,7 +412,7 @@ public class ObjectPlacer : MonoBehaviour {
                         }
 
                         GameObject pollCubePow = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude+1F, latitude)));
-                        pollCubePow.name = countryName+"CO2Pow";
+                        pollCubePow.name = countryName+"CO2";
                         listOfCO2Bars.Add(pollCubePow);
                         Transform tChild = pollCubePow.transform.GetChild(0); 
                         tChild.localScale += new Vector3(power,0.1F,0.1F);
