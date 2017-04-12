@@ -46,9 +46,9 @@ public class ObjectPlacer : MonoBehaviour {
     private List<float> elecG =  new List<float>{128F,140F,153F,179F,191F,204F,217F,230F,242F,255F};
     private List<float> elecB =  new List<float>{128F,115F,102F,89F,77F,64F,51F,38F,25F,13F,0F};
     //Colors for CO2 scales
-    private List<float> CO2R =  new List<float>{0F,31F,61F,92F,122F,153F,173F,194F,214F,235F,255F};
-    private List<float> CO2G =  new List<float>{0F,31F,61F,92F,122F,153F,173F,194F,214F,235F,255F};
-    private List<float> CO2B =  new List<float>{0F,20F,41F,61F,82F,102F,133F,163F,194F,224F,255F};
+    private List<float> CO2R =  new List<float>{0F,61F,122F,153F,194F,214F,235F,255F};
+    private List<float> CO2G =  new List<float>{0F,61F,122F,153F,194F,214F,235F,255F};
+    private List<float> CO2B =  new List<float>{0F,41F,82F,102F,163F,194F,224F,255F};
 
     //Colors for tree Scales
     private List<float> treeR =  new List<float>{0F,0F,0F,0F,0F,26F,77F,128F,179F,230F};
@@ -295,6 +295,9 @@ public class ObjectPlacer : MonoBehaviour {
 
                 if(varToShow == 2)
                 {
+                    List<float> fogR =  new List<float>{255F,235F,214F,194F,153F,122F,61F,0F};
+                    List<float> fogG =  new List<float>{255F,235F,214F,194F,153F,122F,61F,0F};
+                    List<float> fogB =  new List<float>{255F,224F,194F,163F,102F,82F,41F,0F};
                     float amountCO2 = (float)(entry.Value[years[yearIndex]][1]);
                     if(amountCO2 > 0F)
                     {
@@ -311,7 +314,8 @@ public class ObjectPlacer : MonoBehaviour {
                         listOfFog.Add(fogMarker);
                         Renderer rend = fogMarker.GetComponentInChildren<Renderer>();
                         rend.material.SetFloat("_Pow", (power/10F)*4F);
-                        rend.material.SetFloat("_Alpha", (radDeg/7.2F));
+                        rend.material.SetFloat("_Alpha", power/10F);//(radDeg/7.2F));
+                        rend.material.SetColor("_Color", new Color(fogR[(int)power]/255F,fogG[(int)power]/255F,fogB[(int)power]/255F));
                         ParticleSystem aPart = fogMarker.GetComponentInChildren<ParticleSystem>();
                         Transform tChild = fogMarker.transform.GetChild(0); 
                         tChild.localScale = new Vector3((radDeg/7.2F),(radDeg/7.2F),(radDeg/7.2F));
@@ -344,11 +348,11 @@ public class ObjectPlacer : MonoBehaviour {
                 GameObject markerCube;
                 if(varToShow == 0)
                 { 
-                    markerCube= GameObject.Instantiate(rulerPrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude-1F, latitude+1F)));
+                    markerCube= GameObject.Instantiate(rulerPrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude, latitude)));//-longitude-1F, latitude+1F)));
                 }
                 else
                 {
-                    markerCube= GameObject.Instantiate(rulerLight, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude-1F, latitude+1F)));
+                    markerCube= GameObject.Instantiate(rulerLight, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude,latitude)));//-1F, latitude+1F)));
                 }
                 markerCube.name = countryName+"Legend";
                 listOfLegendBars.Add(markerCube);
@@ -372,7 +376,7 @@ public class ObjectPlacer : MonoBehaviour {
                             amountLight = amountLight/10F;
                         }
 
-                        GameObject lightCubePow = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude+1F, latitude+1F)));
+                        GameObject lightCubePow = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude,latitude)));//+1F, latitude+1F)));
                         lightCubePow.name = countryName+"ElectricityPow";
                         listOfElecBars.Add(lightCubePow);
                         Transform tChild = lightCubePow.transform.GetChild(0); 
@@ -388,7 +392,7 @@ public class ObjectPlacer : MonoBehaviour {
 
                     if((float)(entry.Value[years[yearIndex]][0]) != -1F)
                     {
-                        GameObject treeCube = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude-1F, latitude)));
+                        GameObject treeCube = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude,latitude)));//-1F, latitude)));
                         treeCube.name = countryName+"Trees";
                         listOfTreeBars.Add(treeCube);
                         Transform tChild = treeCube.transform.GetChild(0); 
@@ -411,7 +415,7 @@ public class ObjectPlacer : MonoBehaviour {
                             amountPoll = amountPoll/10F;
                         }
 
-                        GameObject pollCubePow = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude+1F, latitude)));
+                        GameObject pollCubePow = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude,latitude)));//+1F, latitude)));
                         pollCubePow.name = countryName+"CO2";
                         listOfCO2Bars.Add(pollCubePow);
                         Transform tChild = pollCubePow.transform.GetChild(0); 
