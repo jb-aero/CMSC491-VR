@@ -19,7 +19,7 @@ public class ObjectPlacer : MonoBehaviour {
     public int varToShow;
 	public float secPerChange;
 
-    private List<string> variables = new List<string>{"% Forest Cover","Electricity Usage","CO2 Emissions"};
+    private List<string> variables = new List<string>{"% Forest Cover","Electricity Usage(KWa per capita)","CO2 Emissions (kton)"};
 
     //This is to hold the tree markers. Each country maps to a list of trees.
 	private Dictionary<string, List<GameObject> > markers;
