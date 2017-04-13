@@ -46,9 +46,9 @@ public class ObjectPlacer : MonoBehaviour {
     private List<float> elecG =  new List<float>{128F,140F,153F,179F,191F,204F,217F,230F,242F,255F};
     private List<float> elecB =  new List<float>{128F,115F,102F,89F,77F,64F,51F,38F,25F,13F,0F};
     //Colors for CO2 scales
-    private List<float> CO2R =  new List<float>{0F,61F,122F,153F,194F,214F,235F,255F};
-    private List<float> CO2G =  new List<float>{0F,61F,122F,153F,194F,214F,235F,255F};
-    private List<float> CO2B =  new List<float>{0F,41F,82F,102F,163F,194F,224F,255F};
+    private List<float> CO2R =  new List<float>{1F,26F,51F,77F,102F,128F,153F,179F,204F,230F,255F};
+    private List<float> CO2G =  new List<float>{1F,26F,51F,77F,102F,128F,153F,179F,204F,230F,255F};//{0F,26F,61F,122F,153F,194F,214F,235F,255F};
+    private List<float> CO2B =  new List<float>{1F,26F,51F,77F,102F,128F,153F,179F,204F,230F,255F};//{0F,26F,41F,82F,102F,163F,194F,224F,255F};
 
     //Colors for tree Scales
     private List<float> treeR =  new List<float>{0F,0F,0F,0F,0F,26F,77F,128F,179F,230F};
