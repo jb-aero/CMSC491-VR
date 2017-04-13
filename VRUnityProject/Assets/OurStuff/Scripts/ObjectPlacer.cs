@@ -346,7 +346,7 @@ public class ObjectPlacer : MonoBehaviour {
                 /*We probably want this to have markings of some kind, or else change colors every 1 or 2 marks*/
 
                 GameObject markerCube;
-                if(varToShow == 0)
+                if(varToShow == 0)//Trees
                 { 
                     markerCube= GameObject.Instantiate(rulerPrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude, latitude)));//-longitude-1F, latitude+1F)));
                 }
@@ -360,14 +360,14 @@ public class ObjectPlacer : MonoBehaviour {
                 //tOChild.localScale += new Vector3(10F,0.1F,0.1F);
                 //Debug.Log(countryName+":"+(float)(entry.Value[years[yearIndex]][0])/10+" "+(float)(entry.Value["1990"][1])*10F+" "+(float)(entry.Value["1990"][2])*10F);
                 /*Now below we create three bars, one for each value scaled to be between 0 and 10*/
-                float amountLight = (float)(entry.Value[years[yearIndex]][1]);
+                float amountLight = (float)(entry.Value[years[yearIndex]][2]);
                 //Debug.Log(amountLight);
                 float amountTrees = (float)(entry.Value[years[yearIndex]][0])/10F;
-                float amountPoll = (float)(entry.Value[years[yearIndex]][2]);
+                float amountPoll = (float)(entry.Value[years[yearIndex]][1]);
 
-                if(varToShow == 1)
+                if(varToShow == 1)//Elec
                 {
-                    if((float)(entry.Value[years[yearIndex]][1]) != -1F)
+                    if((float)(entry.Value[years[yearIndex]][2]) != -1F)
                     {
                         int power = 0;
                         while(amountLight >= 10F)
@@ -375,6 +375,7 @@ public class ObjectPlacer : MonoBehaviour {
                             power++;
                             amountLight = amountLight/10F;
                         }
+                        Debug.Log(countryName +":"+amountLight+"x10^ "+power);
 
                         GameObject lightCubePow = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude,latitude)));//+1F, latitude+1F)));
                         lightCubePow.name = countryName+"ElectricityPow";
@@ -405,7 +406,7 @@ public class ObjectPlacer : MonoBehaviour {
                 }
                 else
                 {
-                    if((float)(entry.Value[years[yearIndex]][2])!= -1F)
+                    if((float)(entry.Value[years[yearIndex]][1])!= -1F)
                     {
 
                         int power = 0;
