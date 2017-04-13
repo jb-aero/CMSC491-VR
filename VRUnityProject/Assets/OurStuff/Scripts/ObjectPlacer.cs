@@ -383,7 +383,7 @@ public class ObjectPlacer : MonoBehaviour {
                         tChild.localScale += new Vector3(power,0.1F,0.1F);
                         tChild.Translate(power/2F,0F,0F);
                         Renderer rend = lightCubePow.GetComponentInChildren<Renderer>();
-                        rend.material.color = new Color(elecR[power]/255F,elecG[power]/255F,elecB[power]/255F);
+                        rend.material.color = new Color(elecR[(int)amountLight]/255F,elecG[(int)amountLight]/255F,elecB[(int)amountLight]/255F);
                 
                     }
                 }
@@ -422,7 +422,7 @@ public class ObjectPlacer : MonoBehaviour {
                         tChild.localScale += new Vector3(power,0.1F,0.1F);
                         tChild.Translate(power/2F,0F,0F);
                         Renderer rend = pollCubePow.GetComponentInChildren<Renderer>();
-                        rend.material.color = new Color(CO2R[power]/255F,CO2G[power]/255F,CO2B[power]/255F);
+                        rend.material.color = new Color(CO2R[(int)(amountPoll)]/255F,CO2G[(int)(amountPoll)]/255F,CO2B[(int)amountPoll]/255F);
 
                     }
                 }
