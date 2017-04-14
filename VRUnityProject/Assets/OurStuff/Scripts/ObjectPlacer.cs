@@ -391,7 +391,14 @@ public class ObjectPlacer : MonoBehaviour {
     //This function draws the rectangles. It's moved here so it can be called when year changes
     void DrawRecs()
     {
+        if(varToShow != 0)
+        {
         description.text = "Value = Color x 10^height";
+        }
+        else
+        {
+            description.text = "Value = Color OR Height (10% step sizes)";
+        }
         if(varToShow == 1)
         {
         //Now let's update the legend
