@@ -54,6 +54,9 @@ public class ObjectPlacer : MonoBehaviour {
     private List<float> treeR =  new List<float>{0F,0F,0F,0F,0F,26F,77F,128F,179F,230F};
     private List<float> treeG =  new List<float>{26F,77F,128F,179F,230F,255F,255F,255F,255F,255F};
     private List<float> treeB =  new List<float>{0F,0F,0F,0F,0F,26F,77F,128F,179F,230F};
+
+    private List<GameObject> legendList = new List<GameObject>();
+    private GameObject canvas;
 	// Use this for initialization
 	void Start () {
         //This is the variable that controls which view we are looking at
@@ -71,6 +74,19 @@ public class ObjectPlacer : MonoBehaviour {
 		reader.NotANormalWord ();
 		reader.dictionaryInception();
 		years = reader.headerList;
+
+        GameObject canvas = GameObject.Find("Canvas");
+        int counter = 0;
+        foreach(Transform child in canvas.transform)
+        {
+            if(child.name == "Legend"+counter)
+            {
+                child.name = counter.ToString();
+                legendList.Add(child.gameObject);
+                counter += 1;
+            }
+        }
+
 
         Debug.Log ("Size of our data: " + reader.countries.Count);
         if(barGraph_view == false)
@@ -251,13 +267,53 @@ public class ObjectPlacer : MonoBehaviour {
     void reDrawElecAndCO2()
     {
         
+        List<float> reds =  new List<float>{0F,0F,128F,255F,255F,255F,255F};
+        List<float> greens =  new List<float>{255F,255F,255F,255F,128F,64F,0F};
+        List<float> blues =  new List<float>{128F,0F,0F,0F,0F,0F,0F};
+
+        List<float> fogR =  new List<float>{255F,235F,214F,194F,153F,122F,61F,0F};
+        List<float> fogG =  new List<float>{255F,235F,214F,194F,153F,122F,61F,0F};
+        List<float> fogB =  new List<float>{255F,224F,194F,163F,102F,82F,41F,0F};
+
+        if(varToShow == 1)
+        {
+        //Now let's update the legend
+                    foreach(GameObject legendPiece in legendList)
+                    {
+                        int theNum = int.Parse(legendPiece.transform.name.ToString());
+                        if(theNum < blues.Count)
+                        {
+                            legendPiece.GetComponentInChildren<Image>().color = new Color(reds[theNum]/255F,greens[theNum]/255F,blues[theNum]/255F);
+                        }
+                        else
+                        {
+                            legendPiece.GetComponentInChildren<Image>().color = new Color(0F,0F,0F,0F);
+                        }
+                    }
+        }
+        else{
+            //Now let's update the legend
+                    foreach(GameObject legendPiece in legendList)
+                    {
+                        int theNum = int.Parse(legendPiece.transform.name.ToString());
+                        if(theNum < blues.Count)
+                        {
+                            legendPiece.GetComponentInChildren<Image>().color = new Color(fogR[theNum]/255F,fogG[theNum]/255F,fogB[theNum]/255F);
+                        }
+                        else
+                        {
+                            legendPiece.GetComponentInChildren<Image>().color = new Color(0F,0F,0F,0F);
+                        }
+                    }  
+        }
+
         foreach(KeyValuePair<string, Dictionary<string, List<float>>> entry in reader.countriesPollution)
             {
                 string countryName = entry.Key;
                 float latitude = reader.countries[countryName][1];
                 float longitude = reader.countries[countryName][2];
                 float radDeg = reader.countries[countryName][7];
-
+                
                 if(varToShow == 1)
                 {
                     float amountLight = (float)(entry.Value[years[yearIndex]][2]);///reader.maxElectList[0]);
@@ -267,9 +323,7 @@ public class ObjectPlacer : MonoBehaviour {
                         //List<float> greens = new List<float>{51F,153F,255F,255F,255F,255F,255F,153F,51F,51F};
                         //List<float> blues = new List<float>{51F,51F,51F,51F,51F,153F,255F,255F,255F,255F};
 
-                        List<float> reds =  new List<float>{0F,0F,128F,255F,255F,255F,255F};
-                        List<float> greens =  new List<float>{255F,255F,255F,255F,128F,64F,0F};
-                        List<float> blues =  new List<float>{128F,0F,0F,0F,0F,0F,0F};
+                       
                         int power = 0;
                         while(amountLight >= 10F)
                         {
@@ -291,13 +345,13 @@ public class ObjectPlacer : MonoBehaviour {
                         countryLight.range = aRange;//Get the size as proportional to the country size
                         lightMarker.name = countryName+"_light";
                     }
+
+                     
                 }
 
                 if(varToShow == 2)
                 {
-                    List<float> fogR =  new List<float>{255F,235F,214F,194F,153F,122F,61F,0F};
-                    List<float> fogG =  new List<float>{255F,235F,214F,194F,153F,122F,61F,0F};
-                    List<float> fogB =  new List<float>{255F,224F,194F,163F,102F,82F,41F,0F};
+                    
                     float amountCO2 = (float)(entry.Value[years[yearIndex]][1]);
                     if(amountCO2 > 0F)
                     {
@@ -332,7 +386,35 @@ public class ObjectPlacer : MonoBehaviour {
     //This function draws the rectangles. It's moved here so it can be called when year changes
     void DrawRecs()
     {
+        if(varToShow == 1)
+        {
+        //Now let's update the legend
+                    foreach(GameObject legendPiece in legendList)
+                    {
+                        int theNum = int.Parse(legendPiece.transform.name.ToString());
+                        legendPiece.GetComponentInChildren<Image>().color = new Color(elecR[theNum]/255F,elecG[theNum]/255F,elecB[theNum]/255F);
+                    }
+        }
+        else if(varToShow == 2)
+        {
+
+        //Now let's update the legend
+                    foreach(GameObject legendPiece in legendList)
+                    {
+                        int theNum = int.Parse(legendPiece.transform.name.ToString());
+                        legendPiece.GetComponentInChildren<Image>().color = new Color(CO2R[theNum]/255F,CO2G[theNum]/255F,CO2B[theNum]/255F);
+                        
+                    }
         
+        }
+        else{
+            foreach(GameObject legendPiece in legendList)
+                    {
+                        int theNum = int.Parse(legendPiece.transform.name.ToString());
+                        legendPiece.GetComponentInChildren<Image>().color = new Color(treeR[theNum]/255F,treeG[theNum]/255F,treeB[theNum]/255F);
+                        
+                    }
+        }
         /*This is for implementing the bar chart ones*/
             foreach(KeyValuePair<string, Dictionary<string, List<float>>> entry in reader.countriesPollution)
             {
@@ -375,7 +457,7 @@ public class ObjectPlacer : MonoBehaviour {
                             power++;
                             amountLight = amountLight/10F;
                         }
-                        Debug.Log(countryName +":"+amountLight+"x10^ "+power);
+                        //Debug.Log(countryName +":"+amountLight+"x10^ "+power);
 
                         GameObject lightCubePow = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude,latitude)));//+1F, latitude+1F)));
                         lightCubePow.name = countryName+"ElectricityPow";
@@ -433,6 +515,12 @@ public class ObjectPlacer : MonoBehaviour {
 
     void drawTreesFromScratch()
     {
+        foreach(GameObject legendPiece in legendList)
+                    {
+                        legendPiece.GetComponentInChildren<Image>().color = new Color(0F,0F,0F,0F); 
+                    }
+
+
         foreach(KeyValuePair<string, Dictionary<string, List<float>>> entry in reader.countriesPollution)
             {
                 string countryName = entry.Key; 
@@ -519,6 +607,13 @@ public class ObjectPlacer : MonoBehaviour {
 
     void updateTrees()
     {
+        foreach(GameObject legendPiece in legendList)
+                    {
+                        legendPiece.GetComponentInChildren<Image>().color = new Color(0F,0F,0F,0F);
+                    }
+
+
+
         foreach(KeyValuePair<string, List<GameObject>> entry in markers)
                     {
                         List<GameObject> tempList = new List<GameObject>();
