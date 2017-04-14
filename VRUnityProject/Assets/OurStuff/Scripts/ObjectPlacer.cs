@@ -596,18 +596,18 @@ public class ObjectPlacer : MonoBehaviour {
             listOfFog.RemoveAt(0);
             Destroy(aFog);
         }
-          foreach(KeyValuePair<string, List<GameObject>> entry in markers)
-                    {
-                        List<GameObject> tempList = new List<GameObject>();
-                        if (markers.TryGetValue(entry.Key, out tempList))
-                            {
-                                for(int t = 0; t < tempList.Count; t++)
-                                {
-                                    GameObject aTree = tempList[t];
-                                    aTree.active = false;
-                                }
-                            }
-                    }
+    	foreach(KeyValuePair<string, List<GameObject>> entry in markers)
+        {
+            List<GameObject> tempList = new List<GameObject>();
+            if (markers.TryGetValue(entry.Key, out tempList))
+            {
+                for(int t = 0; t < tempList.Count; t++)
+                {
+                    GameObject aTree = tempList[t];
+					aTree.SetActive (false);
+                }
+            }
+        }
 
     }
 
@@ -623,17 +623,17 @@ public class ObjectPlacer : MonoBehaviour {
 
 
         foreach(KeyValuePair<string, List<GameObject>> entry in markers)
-                    {
-                        List<GameObject> tempList = new List<GameObject>();
-                        if (markers.TryGetValue(entry.Key, out tempList))
-                            {
-                                for(int t = 0; t < tempList.Count; t++)
-                                {
-                                    GameObject aTree = tempList[t];
-                                    aTree.active = true;
-                                }
-                            }
-                    }
+        {
+            List<GameObject> tempList = new List<GameObject>();
+            if (markers.TryGetValue(entry.Key, out tempList))
+            {
+                for(int t = 0; t < tempList.Count; t++)
+                {
+                    GameObject aTree = tempList[t];
+					aTree.SetActive (true);
+                }
+            }
+        }
         foreach(KeyValuePair<string, Dictionary<string, List<float>>> entry in reader.countriesPollution)
                     {
                         //Get num trees in new year. 
