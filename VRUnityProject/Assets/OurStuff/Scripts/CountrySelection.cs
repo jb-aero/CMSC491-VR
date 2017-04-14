@@ -19,6 +19,7 @@ public class CountrySelection : MonoBehaviour {
 	{
 		if (device.GetPressDown (SteamVR_Controller.ButtonMask.Trigger))
 		{
+			Debug.Log ("Number " + trackedObject.index + " is alive!");
 			device.TriggerHapticPulse ();
 		}
 	}
