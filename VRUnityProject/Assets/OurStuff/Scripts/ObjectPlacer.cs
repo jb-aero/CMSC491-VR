@@ -121,13 +121,13 @@ public class ObjectPlacer : MonoBehaviour {
 
 		if (Input.GetButtonDown ("RightMenuButton"))
 		{
-			Debug.Log ("Hit left trigger.");
+			Debug.Log ("Hit left menu.");
 			barGraph_view = !barGraph_view;
 		}
 
 		if (Input.GetButtonDown ("LeftMenuButton"))
 		{
-			Debug.Log ("Hit right trigger so hard.");
+			Debug.Log ("Hit right menu so hard.");
 			++varToShow;
 		}
 
