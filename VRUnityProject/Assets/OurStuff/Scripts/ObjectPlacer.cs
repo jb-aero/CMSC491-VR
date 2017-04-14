@@ -649,9 +649,12 @@ public class ObjectPlacer : MonoBehaviour {
                             {
                                 for(int i = 0; i < numToRemove; i++)
                                 {
-                                    GameObject aTree = tempList[0];
-                                    tempList.RemoveAt(0);
-                                    Destroy(aTree);
+                                    if(tempList.Count > 0)
+                                    {
+                                        GameObject aTree = tempList[0];
+                                        tempList.RemoveAt(0);
+                                        Destroy(aTree);
+                                    }
                                 }
                             }
                         }
