@@ -57,6 +57,7 @@ public class ObjectPlacer : MonoBehaviour {
 
     private List<GameObject> legendList = new List<GameObject>();
     private GameObject canvas;
+    private Text description;
 	// Use this for initialization
 	void Start () {
         //This is the variable that controls which view we are looking at
@@ -84,6 +85,10 @@ public class ObjectPlacer : MonoBehaviour {
                 child.name = counter.ToString();
                 legendList.Add(child.gameObject);
                 counter += 1;
+            }
+            if(child.name == "LegendDesc")
+            {
+                description = child.gameObject.GetComponentInChildren<Text>();
             }
         }
 
@@ -266,7 +271,7 @@ public class ObjectPlacer : MonoBehaviour {
 
     void reDrawElecAndCO2()
     {
-        
+        description.text = "Value = 10^Color";
         List<float> reds =  new List<float>{0F,0F,128F,255F,255F,255F,255F};
         List<float> greens =  new List<float>{255F,255F,255F,255F,128F,64F,0F};
         List<float> blues =  new List<float>{128F,0F,0F,0F,0F,0F,0F};
@@ -386,6 +391,7 @@ public class ObjectPlacer : MonoBehaviour {
     //This function draws the rectangles. It's moved here so it can be called when year changes
     void DrawRecs()
     {
+        description.text = "Value = Color x 10^height";
         if(varToShow == 1)
         {
         //Now let's update the legend
@@ -515,6 +521,7 @@ public class ObjectPlacer : MonoBehaviour {
 
     void drawTreesFromScratch()
     {
+        description.text = "";
         foreach(GameObject legendPiece in legendList)
                     {
                         legendPiece.GetComponentInChildren<Image>().color = new Color(0F,0F,0F,0F); 
@@ -607,6 +614,7 @@ public class ObjectPlacer : MonoBehaviour {
 
     void updateTrees()
     {
+        description.text = "";
         foreach(GameObject legendPiece in legendList)
                     {
                         legendPiece.GetComponentInChildren<Image>().color = new Color(0F,0F,0F,0F);
