@@ -6,6 +6,8 @@ public class CountrySelection : MonoBehaviour {
 
 	private SteamVR_TrackedObject trackedObject;
 	private SteamVR_Controller.Device device;
+	private RaycastHit raycastHit;
+	private GameObject gameObject = null;
 
 	// Use this for initialization
 	void Start ()
@@ -19,8 +21,12 @@ public class CountrySelection : MonoBehaviour {
 	{
 		if (device.GetPressDown (SteamVR_Controller.ButtonMask.Trigger))
 		{
-			Debug.Log ("Number " + trackedObject.index + " is alive!");
-			device.TriggerHapticPulse ();
+			if(Physics.Raycast(transform.position, transform.forward, out raycastHit))
+			{
+				gameObject = raycastHit.collider.gameObject;
+
+				Debug.Log ("Selected: " + gameObject.transform.root.name);
+			}
 		}
 	}
 }
