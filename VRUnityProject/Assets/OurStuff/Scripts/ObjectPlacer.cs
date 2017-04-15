@@ -32,7 +32,7 @@ public class ObjectPlacer : MonoBehaviour {
     private List<GameObject> listOfCO2Bars = new List<GameObject>();
     private List<GameObject> listOfLegendBars = new List<GameObject>();
 
-    //To detect a change
+    //To detect a change, we keep aprivate variables with the previous value
     private int oldYear;
     private int lastTreeYear;
     private int oldVar;
@@ -46,9 +46,9 @@ public class ObjectPlacer : MonoBehaviour {
     private List<float> elecG =  new List<float>{128F,140F,153F,179F,191F,204F,217F,230F,242F,255F};
     private List<float> elecB =  new List<float>{128F,115F,102F,89F,77F,64F,51F,38F,25F,13F,0F};
     //Colors for CO2 scales
-    private List<float> CO2R =  new List<float>{1F,26F,51F,77F,102F,128F,153F,179F,204F,230F,255F};
-    private List<float> CO2G =  new List<float>{1F,26F,51F,77F,102F,128F,153F,179F,204F,230F,255F};//{0F,26F,61F,122F,153F,194F,214F,235F,255F};
-    private List<float> CO2B =  new List<float>{1F,26F,51F,77F,102F,128F,153F,179F,204F,230F,255F};//{0F,26F,41F,82F,102F,163F,194F,224F,255F};
+    private List<float> CO2R =  new List<float>{26F,77F,128F,179F,230F,255F,255F,255F,255F,255F};
+    private List<float> CO2G =  new List<float>{0F,0F,0F,0F,0F,26F,77F,128F,179F,230F};
+    private List<float> CO2B =  new List<float>{26F,77F,128F,179F,230F,255F,255F,255F,255F,255F};
 
     //Colors for tree Scales
     private List<float> treeR =  new List<float>{0F,0F,0F,0F,0F,26F,77F,128F,179F,230F};
@@ -58,9 +58,12 @@ public class ObjectPlacer : MonoBehaviour {
     private List<GameObject> legendList = new List<GameObject>();
     private GameObject canvas;
     private Text description;
+
 	// Use this for initialization
+    //This function runs when the game starts
 	void Start () {
-        //This is the variable that controls which view we are looking at
+        
+        //Initialize all the variables
         barGraph_view = true;
         varToShow = 1;//0 means trees, 1 is electricity, 2 is CO2
         yearIndex = 0;
@@ -72,10 +75,12 @@ public class ObjectPlacer : MonoBehaviour {
         markers = new Dictionary<string, List<GameObject>>();
 
         Debug.Log ("LOOK WE ARE DOING THINGS");
+        //Build the dictionary
 		reader.NotANormalWord ();
 		reader.dictionaryInception();
 		years = reader.headerList;
 
+        //Build the list of legend-objects so we can color our legend later
         GameObject canvas = GameObject.Find("Canvas");
         int counter = 0;
         foreach(Transform child in canvas.transform)
@@ -92,7 +97,7 @@ public class ObjectPlacer : MonoBehaviour {
             }
         }
 
-
+        //Draw our initial view
         Debug.Log ("Size of our data: " + reader.countries.Count);
         if(barGraph_view == false)
         {
@@ -119,6 +124,7 @@ public class ObjectPlacer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        //Get button presses
 		if (Input.GetButtonDown ("RightMenuButton"))
 		{
 			Debug.Log ("Hit left menu.");
@@ -154,9 +160,11 @@ public class ObjectPlacer : MonoBehaviour {
 		yearIndex %= 24;
 		yearText.text = years [yearIndex];
         varText.text = variables[varToShow];
-        //Check if the view, variable, and year have changed in that order
+
+        //Check if the view, variable, and year have changed (in that order)
         if(wasBar != barGraph_view)
         {
+            //If we have switched views (not allowed for user trials, update the view)
             clearHouse();
             if(barGraph_view == true)
             {
@@ -182,6 +190,7 @@ public class ObjectPlacer : MonoBehaviour {
         }
         else if(oldVar != varToShow && barGraph_view == false)
         {
+            //If we switched variables in the natural view, draw the appropriate stuff
             if(varToShow == 0)
             {
                 //Delete the CO2 and light values, and draw the trees
@@ -195,30 +204,30 @@ public class ObjectPlacer : MonoBehaviour {
                         updateTrees();
                     }
             }
-            else if(oldVar == 0)
+            else
             {
-                //Remove the trees, then call redraw
+                //We are switching to something not trees
                 clearHouse();
                 reDrawElecAndCO2();
             }
-            else{
-                clearHouse();
-                reDrawElecAndCO2();
-            }
+            
             oldVar = varToShow;
         }
         else if(oldVar != varToShow && barGraph_view == true)
         {
+            //Switching between variables in bar view
             clearHouse();
             DrawRecs();
             oldVar = varToShow;
         }
         else if(yearIndex != oldYear)
         {
+            //The year has been changed
     		if(barGraph_view == false)
             {
                 if(varToShow == 0)
                 {
+                    //We don't want to redraw all of the trees, so just update
                     updateTrees();
                 }
                 else if(varToShow == 1)
@@ -268,10 +277,12 @@ public class ObjectPlacer : MonoBehaviour {
 	}
 
 
-
+    //This function is for drawing electricity and fog in the natural view
     void reDrawElecAndCO2()
     {
         description.text = "Value = 10^Color";
+
+        //Color lists for the light and fog
         List<float> reds =  new List<float>{0F,0F,128F,255F,255F,255F,255F};
         List<float> greens =  new List<float>{255F,255F,255F,255F,128F,64F,0F};
         List<float> blues =  new List<float>{128F,0F,0F,0F,0F,0F,0F};
@@ -289,10 +300,12 @@ public class ObjectPlacer : MonoBehaviour {
                         if(theNum < blues.Count)
                         {
                             legendPiece.GetComponentInChildren<Image>().color = new Color(reds[theNum]/255F,greens[theNum]/255F,blues[theNum]/255F);
+                            legendPiece.transform.GetComponentInChildren<Text>().color = new Color(1F,1F,1F,1F);
                         }
                         else
                         {
                             legendPiece.GetComponentInChildren<Image>().color = new Color(0F,0F,0F,0F);
+                            legendPiece.transform.GetComponentInChildren<Text>().color = new Color(0F,0F,0F,0F);
                         }
                     }
         }
@@ -304,14 +317,17 @@ public class ObjectPlacer : MonoBehaviour {
                         if(theNum < blues.Count)
                         {
                             legendPiece.GetComponentInChildren<Image>().color = new Color(fogR[theNum]/255F,fogG[theNum]/255F,fogB[theNum]/255F);
+                            legendPiece.transform.GetComponentInChildren<Text>().color = new Color(1F,1F,1F,1F);
                         }
                         else
                         {
                             legendPiece.GetComponentInChildren<Image>().color = new Color(0F,0F,0F,0F);
+                            legendPiece.transform.GetComponentInChildren<Text>().color = new Color(0F,0F,0F,0F);
                         }
                     }  
         }
 
+        //Now loop over the countries, and update what needs to be done
         foreach(KeyValuePair<string, Dictionary<string, List<float>>> entry in reader.countriesPollution)
             {
                 string countryName = entry.Key;
@@ -319,16 +335,14 @@ public class ObjectPlacer : MonoBehaviour {
                 float longitude = reader.countries[countryName][2];
                 float radDeg = reader.countries[countryName][7];
                 
+                //If we want lights, draw the lights!
                 if(varToShow == 1)
                 {
                     float amountLight = (float)(entry.Value[years[yearIndex]][2]);///reader.maxElectList[0]);
                     if(amountLight > 0F)
                     {
-                        //List<float> reds = new List<float>{255F,255F,255F,153F,51F,51F,51F,51F,51F,153F};
-                        //List<float> greens = new List<float>{51F,153F,255F,255F,255F,255F,255F,153F,51F,51F};
-                        //List<float> blues = new List<float>{51F,51F,51F,51F,51F,153F,255F,255F,255F,255F};
 
-                       
+                        //Get the exponent and value
                         int power = 0;
                         while(amountLight >= 10F)
                         {
@@ -336,10 +350,12 @@ public class ObjectPlacer : MonoBehaviour {
                             amountLight = amountLight/10F;
                         }
 
+                        //Draw the lights
                         GameObject lightMarker = GameObject.Instantiate(lightPrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude, latitude)));
                         listOfLights.Add(lightMarker);
                         Light countryLight = lightMarker.GetComponentInChildren(typeof(Light)) as Light;
                         
+                        //Set the color and size of the lights
                         Color prettyColor = new Color(reds[power]/255F,greens[power]/255F,blues[power]/255F);
                         countryLight.color = prettyColor;
                         float aRange = 2F*(radDeg/3.6F);
@@ -354,10 +370,12 @@ public class ObjectPlacer : MonoBehaviour {
                      
                 }
 
+                //If we want fog, draw the fog!
                 if(varToShow == 2)
                 {
                     
                     float amountCO2 = (float)(entry.Value[years[yearIndex]][1]);
+                    //Get the exponent and value
                     if(amountCO2 > 0F)
                     {
                         float power = 0F;
@@ -367,13 +385,14 @@ public class ObjectPlacer : MonoBehaviour {
                             amountCO2 = amountCO2/10F;
                         }
 
-                        //Debug.Log (power);
-
+                        //Draw the fog
                         GameObject fogMarker = GameObject.Instantiate(fogPrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude, latitude)));
                         listOfFog.Add(fogMarker);
+
+                        //Set the fog variables to appropriate values
                         Renderer rend = fogMarker.GetComponentInChildren<Renderer>();
                         rend.material.SetFloat("_Pow", (power/10F)*4F);
-                        rend.material.SetFloat("_Alpha", power/10F);//(radDeg/7.2F));
+                        rend.material.SetFloat("_Alpha", power/10F);
                         rend.material.SetColor("_Color", new Color(fogR[(int)power]/255F,fogG[(int)power]/255F,fogB[(int)power]/255F));
                         ParticleSystem aPart = fogMarker.GetComponentInChildren<ParticleSystem>();
                         Transform tChild = fogMarker.transform.GetChild(0); 
@@ -388,9 +407,10 @@ public class ObjectPlacer : MonoBehaviour {
 
 
 
-    //This function draws the rectangles. It's moved here so it can be called when year changes
+    //This function draws the bar graph
     void DrawRecs()
     {
+        //Update legend
         if(varToShow != 0)
         {
         description.text = "Value = Color x 10^height";
@@ -401,34 +421,36 @@ public class ObjectPlacer : MonoBehaviour {
         }
         if(varToShow == 1)
         {
-        //Now let's update the legend
+        //Now let's update the legend for electricity
                     foreach(GameObject legendPiece in legendList)
                     {
                         int theNum = int.Parse(legendPiece.transform.name.ToString());
                         legendPiece.GetComponentInChildren<Image>().color = new Color(elecR[theNum]/255F,elecG[theNum]/255F,elecB[theNum]/255F);
+                        legendPiece.transform.GetComponentInChildren<Text>().color = new Color(1F,1F,1F,1F);
                     }
         }
         else if(varToShow == 2)
         {
 
-        //Now let's update the legend
+        //Now let's update the legend for CO2
                     foreach(GameObject legendPiece in legendList)
                     {
                         int theNum = int.Parse(legendPiece.transform.name.ToString());
                         legendPiece.GetComponentInChildren<Image>().color = new Color(CO2R[theNum]/255F,CO2G[theNum]/255F,CO2B[theNum]/255F);
-                        
+                        legendPiece.transform.GetComponentInChildren<Text>().color = new Color(1F,1F,1F,1F);
                     }
         
         }
         else{
             foreach(GameObject legendPiece in legendList)
                     {
+                        //Treeeees
                         int theNum = int.Parse(legendPiece.transform.name.ToString());
                         legendPiece.GetComponentInChildren<Image>().color = new Color(treeR[theNum]/255F,treeG[theNum]/255F,treeB[theNum]/255F);
-                        
+                        legendPiece.transform.GetComponentInChildren<Text>().color = new Color(1F,1F,1F,1F);
                     }
         }
-        /*This is for implementing the bar chart ones*/
+            //Loop over the countries
             foreach(KeyValuePair<string, Dictionary<string, List<float>>> entry in reader.countriesPollution)
             {
                 string countryName = entry.Key;
@@ -437,9 +459,8 @@ public class ObjectPlacer : MonoBehaviour {
                 float latitude = reader.countries[countryName][1];
                 float longitude = reader.countries[countryName][2];
 
-                /*So the idea here is to create a Legend for the cubes to compare to*/
-                /*We probably want this to have markings of some kind, or else change colors every 1 or 2 marks*/
-
+                /*So the idea here is to create a ruler for the cubes to compare to*/
+                //Generate a ruler. Height depends on if it is trees or not, since elec and CO2 don't go all the way to 10
                 GameObject markerCube;
                 if(varToShow == 0)//Trees
                 { 
@@ -449,12 +470,11 @@ public class ObjectPlacer : MonoBehaviour {
                 {
                     markerCube= GameObject.Instantiate(rulerLight, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude,latitude)));//-1F, latitude+1F)));
                 }
+
                 markerCube.name = countryName+"Legend";
                 listOfLegendBars.Add(markerCube);
                 Transform tOChild = markerCube.transform.GetChild(0); 
-                //tOChild.localScale += new Vector3(10F,0.1F,0.1F);
-                //Debug.Log(countryName+":"+(float)(entry.Value[years[yearIndex]][0])/10+" "+(float)(entry.Value["1990"][1])*10F+" "+(float)(entry.Value["1990"][2])*10F);
-                /*Now below we create three bars, one for each value scaled to be between 0 and 10*/
+               
                 float amountLight = (float)(entry.Value[years[yearIndex]][2]);
                 //Debug.Log(amountLight);
                 float amountTrees = (float)(entry.Value[years[yearIndex]][0])/10F;
@@ -470,12 +490,13 @@ public class ObjectPlacer : MonoBehaviour {
                             power++;
                             amountLight = amountLight/10F;
                         }
-                        //Debug.Log(countryName +":"+amountLight+"x10^ "+power);
-
+                        
+                        //Draw the bar and set the height and color
                         GameObject lightCubePow = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude,latitude)));//+1F, latitude+1F)));
                         lightCubePow.name = countryName+"ElectricityPow";
                         listOfElecBars.Add(lightCubePow);
                         Transform tChild = lightCubePow.transform.GetChild(0); 
+                        //Since rectangles grow symmetrically, need to move it out of the earth a bit
                         tChild.localScale += new Vector3(power,0.1F,0.1F);
                         tChild.Translate(power/2F,0F,0F);
                         Renderer rend = lightCubePow.GetComponentInChildren<Renderer>();
@@ -483,11 +504,12 @@ public class ObjectPlacer : MonoBehaviour {
                 
                     }
                 }
-                else if (varToShow == 0)
+                else if (varToShow == 0)//Treeeees
                 {
 
                     if((float)(entry.Value[years[yearIndex]][0]) != -1F)
                     {
+                        //Draw the bar and set the height and color, bot of which are just %/10
                         GameObject treeCube = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude,latitude)));//-1F, latitude)));
                         treeCube.name = countryName+"Trees";
                         listOfTreeBars.Add(treeCube);
@@ -495,11 +517,10 @@ public class ObjectPlacer : MonoBehaviour {
                         tChild.localScale += new Vector3(amountTrees,0.1F,0.1F);
                         tChild.Translate(amountTrees/2F,0F,0F);
                         Renderer rend = treeCube.GetComponentInChildren<Renderer>();
-                        //Renderer rend = treeCube.GetComponent<Renderer>();
                         rend.material.color = new Color(treeR[(int)amountTrees]/255F,treeG[(int)amountTrees]/255F,treeB[(int)amountTrees]/255F);
                     }
                 }
-                else
+                else//CO2
                 {
                     if((float)(entry.Value[years[yearIndex]][1])!= -1F)
                     {
@@ -510,12 +531,13 @@ public class ObjectPlacer : MonoBehaviour {
                             power++;
                             amountPoll = amountPoll/10F;
                         }
-
+                        //Draw the bar and set the height and color
                         GameObject pollCubePow = GameObject.Instantiate(cubePrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude,latitude)));//+1F, latitude)));
                         pollCubePow.name = countryName+"CO2";
                         listOfCO2Bars.Add(pollCubePow);
                         Transform tChild = pollCubePow.transform.GetChild(0); 
                         tChild.localScale += new Vector3(power,0.1F,0.1F);
+                        //Adjust height
                         tChild.Translate(power/2F,0F,0F);
                         Renderer rend = pollCubePow.GetComponentInChildren<Renderer>();
                         rend.material.color = new Color(CO2R[(int)(amountPoll)]/255F,CO2G[(int)(amountPoll)]/255F,CO2B[(int)amountPoll]/255F);
@@ -526,15 +548,18 @@ public class ObjectPlacer : MonoBehaviour {
     }
 
 
+    //This function is called the very first time trees are drawn in the scene. It builds the country->tree dictionary from scratch
     void drawTreesFromScratch()
     {
-        description.text = "";
+        description.text = "Each tree = 1% Forest cover";
+        //No legend necessary
         foreach(GameObject legendPiece in legendList)
                     {
                         legendPiece.GetComponentInChildren<Image>().color = new Color(0F,0F,0F,0F); 
+                        legendPiece.transform.GetComponentInChildren<Text>().color = new Color(0F,0F,0F,0F);
                     }
 
-
+        //loop over countries
         foreach(KeyValuePair<string, Dictionary<string, List<float>>> entry in reader.countriesPollution)
             {
                 string countryName = entry.Key; 
@@ -553,6 +578,7 @@ public class ObjectPlacer : MonoBehaviour {
                 {
                     for (int i = 0; i < numTrees; i++)
                     {
+                        //For each percent, make a new tree with a random lat and long within the country's borders
                         float newLat = Random.Range(latitude - radDeg, latitude + radDeg);
                         float newLong = Random.Range(longitude - radDeg, longitude + radDeg);
                         GameObject marker = GameObject.Instantiate(prefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -newLong, newLat)));
@@ -603,6 +629,7 @@ public class ObjectPlacer : MonoBehaviour {
             listOfFog.RemoveAt(0);
             Destroy(aFog);
         }
+        //For the trees, we don't destroy them (since redrawing them is a pain), so they just get de-activated
     	foreach(KeyValuePair<string, List<GameObject>> entry in markers)
         {
             List<GameObject> tempList = new List<GameObject>();
@@ -618,17 +645,18 @@ public class ObjectPlacer : MonoBehaviour {
 
     }
 
-
+    //This is called whenever something changes with trees (or changes to trees). Only called if trees have been displpayed before.
     void updateTrees()
     {
-        description.text = "";
+        description.text = "Each Tree = 1% Forest Cover";
         foreach(GameObject legendPiece in legendList)
                     {
                         legendPiece.GetComponentInChildren<Image>().color = new Color(0F,0F,0F,0F);
+                        legendPiece.transform.GetComponentInChildren<Text>().color = new Color(0F,0F,0F,0F);
                     }
 
 
-
+        //Make all existing trees visible
         foreach(KeyValuePair<string, List<GameObject>> entry in markers)
         {
             List<GameObject> tempList = new List<GameObject>();
@@ -641,6 +669,7 @@ public class ObjectPlacer : MonoBehaviour {
                 }
             }
         }
+        //Loop over countries
         foreach(KeyValuePair<string, Dictionary<string, List<float>>> entry in reader.countriesPollution)
                     {
                         //Get num trees in new year. 
