@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CountrySelection : MonoBehaviour {
 
@@ -8,7 +9,8 @@ public class CountrySelection : MonoBehaviour {
 	private SteamVR_Controller.Device device;
 	private RaycastHit raycastHit;
 	// private GameObject selected = null;
-	private string sname, country;
+	private string sname;
+	private Text country;
 	private ObjectPlacer op;
 
 	// Use this for initialization
@@ -17,6 +19,7 @@ public class CountrySelection : MonoBehaviour {
 		trackedObject = GetComponent<SteamVR_TrackedObject> ();
 		device = SteamVR_Controller.Input ((int) trackedObject.index);
 		op = GameObject.Find ("PuppetMaster").GetComponent<ObjectPlacer> ();
+		country = GameObject.Find ("CountryName").GetComponent<Text> ();
 	}
 	
 	// Update is called once per frame
@@ -37,20 +40,20 @@ public class CountrySelection : MonoBehaviour {
 					{
 						if (sname[sname.Length - 1] == 'd')
 						{
-							country = sname.Substring (0, sname.Length - "Legend".Length);
+							country.text = sname.Substring (0, sname.Length - "Legend".Length);
 						}
 						else
 						{
 							switch (op.varToShow)
 							{
 							case 0:
-								country = sname.Substring (0, sname.Length - "Trees".Length);
+								country.text = sname.Substring (0, sname.Length - "Trees".Length);
 								break;
 							case 1:
-								country = sname.Substring (0, sname.Length - "ElectricityPow".Length);
+								country.text = sname.Substring (0, sname.Length - "ElectricityPow".Length);
 								break;
 							case 2:
-								country = sname.Substring (0, sname.Length - "CO2".Length);
+								country.text = sname.Substring (0, sname.Length - "CO2".Length);
 								break;
 							}
 						}
@@ -63,16 +66,18 @@ public class CountrySelection : MonoBehaviour {
 							/* This one is a bit harder
 							 * country = sname.Substring (0, sname.Length - "Trees".Length);
 							*/
+							country.text = "FERNGULLY";
 							break;
 						case 1:
-							country = sname.Substring (0, sname.Length - "_light".Length);
+							country.text = sname.Substring (0, sname.Length - "_light".Length);
 							break;
 						case 2:
-							country = sname.Substring (0, sname.Length - "_CO2".Length);
+							country.text = sname.Substring (0, sname.Length - "_CO2".Length);
 							break;
 						}
 						
 					}
+					Debug.Log ("Selected: " + country.text);
 				}
 			}
 		}
