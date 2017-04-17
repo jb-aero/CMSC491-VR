@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 198447336803503632}
   - component: {fileID: 199057264325487462}
   - component: {fileID: 114449571327091488}
+  - component: {fileID: 135623931335358934}
   m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
@@ -84,11 +85,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scale: 1.07
   intensity: 0.54
-  alpha: 0.86
+  alpha: 0.05
   alphasub: 0.06
-  pow: 4
+  pow: 2
   color: {r: 0.44852942, g: 0.44852942, b: 0.44852942, a: 1}
   fogMaterial: {fileID: 2100000, guid: 015ded2f9331e4ffdb975fd20910ea0c, type: 2}
+--- !u!135 &135623931335358934
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1098667001152942}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 5
+  m_Center: {x: -2.5, y: 2.5, z: 0}
 --- !u!198 &198447336803503632
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -144,7 +157,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -2056835152
+  randomSeed: 1340317625
   InitialModule:
     serializedVersion: 3
     enabled: 1
