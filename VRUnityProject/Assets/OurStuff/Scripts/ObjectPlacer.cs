@@ -280,7 +280,7 @@ public class ObjectPlacer : MonoBehaviour {
     //This function is for drawing electricity and fog in the natural view
     void reDrawElecAndCO2()
     {
-        description.text = "Value = 10^Color";
+        
 
         //Color lists for the light and fog
         List<float> reds =  new List<float>{0F,0F,128F,255F,255F,255F,255F};
@@ -293,6 +293,7 @@ public class ObjectPlacer : MonoBehaviour {
 
         if(varToShow == 1)
         {
+            description.text = "Value = intensity x 10^Color";
         //Now let's update the legend
                     foreach(GameObject legendPiece in legendList)
                     {
@@ -310,6 +311,7 @@ public class ObjectPlacer : MonoBehaviour {
                     }
         }
         else{
+            description.text = "Value = intensity x 10^Color";
             //Now let's update the legend
                     foreach(GameObject legendPiece in legendList)
                     {
@@ -358,6 +360,7 @@ public class ObjectPlacer : MonoBehaviour {
                         //Set the color and size of the lights
                         Color prettyColor = new Color(reds[power]/255F,greens[power]/255F,blues[power]/255F);
                         countryLight.color = prettyColor;
+                        countryLight.intensity = 1F + (amountLight/10F)*7F;
                         float aRange = 2F*(radDeg/3.6F);
                         if(aRange > 4F)
                         {
@@ -391,7 +394,7 @@ public class ObjectPlacer : MonoBehaviour {
 
                         //Set the fog variables to appropriate values
                         Renderer rend = fogMarker.GetComponentInChildren<Renderer>();
-                        rend.material.SetFloat("_Pow", (power/10F)*4F);
+                        rend.material.SetFloat("_Pow", (amountCO2/10F)*4F);
                         rend.material.SetFloat("_Alpha", power/10F);
                         rend.material.SetColor("_Color", new Color(fogR[(int)power]/255F,fogG[(int)power]/255F,fogB[(int)power]/255F));
                         ParticleSystem aPart = fogMarker.GetComponentInChildren<ParticleSystem>();
