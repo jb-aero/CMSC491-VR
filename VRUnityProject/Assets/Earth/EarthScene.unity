@@ -3188,9 +3188,9 @@ MonoBehaviour:
   limits:
     upAngle: 85
     downAngle: 85
-    upDownSpeed: 0.75
-    leftRightSpeed: 0.75
-    zoomSpeed: 0.5
+    upDownSpeed: 0.65
+    leftRightSpeed: 0.65
+    zoomSpeed: 0.4
     nearZoom: 25
     farZoom: 60
 --- !u!4 &1971639138 stripped
