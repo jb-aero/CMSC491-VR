@@ -66,7 +66,7 @@ public class CountrySelection : MonoBehaviour {
 							/* This one is a bit harder
 							 * country = sname.Substring (0, sname.Length - "Trees".Length);
 							*/
-							country.text = "FERNGULLY";
+							country.text = sname;
 							break;
 						case 1:
 							country.text = sname.Substring (0, sname.Length - "_light".Length);
@@ -77,7 +77,7 @@ public class CountrySelection : MonoBehaviour {
 						}
 						
 					}
-					Debug.Log ("Selected: " + country.text);
+					// Debug.Log ("Selected: " + country.text);
 				}
 			}
 		}
