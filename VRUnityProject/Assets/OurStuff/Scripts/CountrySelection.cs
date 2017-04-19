@@ -63,10 +63,7 @@ public class CountrySelection : MonoBehaviour {
 						switch (op.varToShow)
 						{
 						case 0:
-							/* This one is a bit harder
-							 * country = sname.Substring (0, sname.Length - "Trees".Length);
-							*/
-							country.text = sname;
+							country.text = sname.Substring (0, sname.Length - 2);
 							break;
 						case 1:
 							country.text = sname.Substring (0, sname.Length - "_light".Length);

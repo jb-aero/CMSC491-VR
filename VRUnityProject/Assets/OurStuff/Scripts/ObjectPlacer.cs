@@ -585,7 +585,7 @@ public class ObjectPlacer : MonoBehaviour {
                         float newLat = Random.Range(latitude - radDeg, latitude + radDeg);
                         float newLong = Random.Range(longitude - radDeg, longitude + radDeg);
                         GameObject marker = GameObject.Instantiate(prefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -newLong, newLat)));
-                        marker.name = countryName + i.ToString();
+						marker.name = countryName + (i < 10 ? "0" : "") + i.ToString();
                         listOfTrees.Add(marker);
                     }
                     markers.Add(countryName,listOfTrees);
