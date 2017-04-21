@@ -39,7 +39,7 @@ public class ObjectPlacer : MonoBehaviour {
 	private bool wasBar;
 	private float lastVarChange;
 
-    private List<string> years;
+    public List<string> years;
 
     //Colors for electricity
     private List<float> elecR =  new List<float>{128F,140F,153F,179F,191F,204F,217F,230F,242F,255F};

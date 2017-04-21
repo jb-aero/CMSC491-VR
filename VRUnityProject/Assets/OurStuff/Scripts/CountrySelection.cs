@@ -10,7 +10,7 @@ public class CountrySelection : MonoBehaviour {
 	private RaycastHit raycastHit;
 	// private GameObject selected = null;
 	private string sname;
-	private Text country;
+	private Text country, valt;
 	private ObjectPlacer op;
 
 	// Use this for initialization
@@ -20,6 +20,7 @@ public class CountrySelection : MonoBehaviour {
 		device = SteamVR_Controller.Input ((int) trackedObject.index);
 		op = GameObject.Find ("PuppetMaster").GetComponent<ObjectPlacer> ();
 		country = GameObject.Find ("CountryName").GetComponent<Text> ();
+		valt = GameObject.Find ("SelectedValue").GetComponent<Text> ();
 	}
 	
 	// Update is called once per frame
@@ -74,6 +75,23 @@ public class CountrySelection : MonoBehaviour {
 						}
 						
 					}
+
+					float val = op.reader.countriesPollution[country.text][op.years[op.yearIndex]][op.varToShow];
+					if (op.varToShow == 0)
+					{
+						valt.text = val.ToString ("2f");
+					}
+					else
+					{
+						int power = 0;
+						while(val >= 10F)
+						{
+							power++;
+							val = val/10F;
+						}
+						valt.text = val.ToString ("4F") + "e" + power.ToString ();
+					}
+
 					// Debug.Log ("Selected: " + country.text);
 				}
 			}
