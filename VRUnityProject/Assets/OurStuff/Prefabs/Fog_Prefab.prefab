@@ -101,7 +101,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 5
-  m_Center: {x: -2.5, y: 2.5, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!198 &198447336803503632
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -157,7 +157,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1340317625
+  randomSeed: -1114268272
   InitialModule:
     serializedVersion: 3
     enabled: 1

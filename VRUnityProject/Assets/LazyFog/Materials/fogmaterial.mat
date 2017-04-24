@@ -72,7 +72,7 @@ Material:
     m_Floats:
     - first:
         name: _Alpha
-      second: 0.86
+      second: 0.05
     - first:
         name: _AlphaSub
       second: 0.06
@@ -111,7 +111,7 @@ Material:
       second: 0.02
     - first:
         name: _Pow
-      second: 4
+      second: 2
     - first:
         name: _Scale
       second: 1.07

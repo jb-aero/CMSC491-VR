@@ -22,7 +22,7 @@ public class CountrySelection : MonoBehaviour {
 		country = GameObject.Find ("CountryName").GetComponent<Text> ();
 		valt = GameObject.Find ("SelectedValue").GetComponent<Text> ();
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
@@ -34,6 +34,7 @@ public class CountrySelection : MonoBehaviour {
 				// Debug.Log ("Selected: " + selected.transform.root.name);
 
 				sname = raycastHit.collider.gameObject.transform.root.name;
+                Debug.Log (sname);
 
 				if (sname != "Earth")
 				{
@@ -73,13 +74,13 @@ public class CountrySelection : MonoBehaviour {
 							country.text = sname.Substring (0, sname.Length - "_CO2".Length);
 							break;
 						}
-						
+
 					}
 
-					float val = op.reader.countriesPollution[country.text][op.years[op.yearIndex]][op.varToShow];
+					/*float val = op.reader.countriesPollution[country.text][op.years[op.yearIndex]][op.varToShow];
 					if (op.varToShow == 0)
 					{
-						valt.text = val.ToString ("2f");
+						valt.text = val.ToString ("#.##");
 					}
 					else
 					{
@@ -89,8 +90,8 @@ public class CountrySelection : MonoBehaviour {
 							power++;
 							val = val/10F;
 						}
-						valt.text = val.ToString ("4F") + "e" + power.ToString ();
-					}
+						valt.text = val.ToString ("#.####") + "e" + power.ToString ();
+					}*/
 
 					// Debug.Log ("Selected: " + country.text);
 				}
