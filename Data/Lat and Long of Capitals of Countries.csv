@@ -6,7 +6,7 @@ American Samoa,-14.3333,-170
 Andorra,42.5,1.5
 Angola,-12.5,18.5
 Anguilla,18.25,-63.1667
-Antarctica,-90,0
+Antarctica,-90,135
 Antigua and Barbuda,17.05,-61.8
 Argentina,-34,-64
 Armenia,40,45
@@ -48,19 +48,19 @@ Christmas Island,-10.5,105.6667
 Cocos (Keeling) Islands,-12.5,96.8333
 Colombia,4,-72
 Comoros,-12.1667,44.25
-Congo,-1,15
+Congo,-4,21
 Cook Islands,-21.2333,-159.7667
 Costa Rica,10,-84
 Croatia,45.1667,15.5
 Cuba,21.5,-80
 Cyprus,35,33
 Czech Republic,49.75,15.5
-Democratic Republic of Congo,-20,30
+Democratic Republic of Congo,-4,21
 Denmark,56,10
 Djibouti,11.5,43
 Dominica,15.4167,-61.3333
 Dominican Republic,19,-70.6667
-East Timor,8.8742,125.7275
+East Timor,-8.8742,125.7275
 Ecuador,-2,-77.5
 Egypt,27,30
 El Salvador,13.8333,-88.9167
@@ -74,11 +74,11 @@ Fiji,-18,175
 Finland,64,26
 France,46,2
 French Guiana,4,-53
-French Polynesia,-15,-140
-French Southern Territories,-43,67
+French Polynesia,-15,-149
+French Southern Territories,-49,67
 Gabon,-1,11.75
 Gambia,13.4667,-16.5667
-Georgia,42,-43.5
+Georgia,32,-82
 Germany,51,9
 Ghana,8,-2
 Gibraltar,36.1408,-5.3536
@@ -110,7 +110,7 @@ Japan,36,138
 Jordan,31,36
 Kazakhstan,48,68
 Kenya,1,38
-Kiribati,3.3704,-168.734
+Kiribati,-3.37,-168.734
 Kuwait,29.3375,47.6581
 Kyrgyzstan,41,75
 Laos,18,105
@@ -177,10 +177,6 @@ Romania,46,25
 Russia,60,100
 Rwanda,-2,30
 Saint Helena,-15.9333,-5.7
-Saint Kitts and Nevis,17.3333,-62.75
-Saint Lucia,13.8833,-61.1333
-Saint Pierre and Miquelon,46.8333,-56.3333
-Saint Vincent and the Grenadines,13.25,-61.2
 Samoa,-13.5833,-172.3333
 San Marino,43.7667,12.4167
 Sao Tome and Principe,1,7
@@ -193,7 +189,7 @@ Singapore,1.3667,103.8
 Slovakia,48.6667,19.5
 Slovenia,46,15
 Solomon Islands,-8,159
-Somalia,10,49
+Somalia,5,46
 South Africa,-29,24
 South Georgia and the South Sandwich Islands,-54.5,-37
 South Korea,37,127.5
@@ -230,15 +226,15 @@ Vanuatu,-16,167
 Vatican City,41.9,12.45
 Venezuela,8,-66
 Vietnam,16,106
-Virgin Islands ,18.3333,-64.8333
+United States Virgin Islands,18.3333,-64.8333
 Wallis and Futuna Islands,-13.3,-176.2
 Western Sahara,24.5,-13
 Yemen,15,48
 Yugoslavia,14.4832908,121.021382
 Zambia,-15,30
-Zimbabwe,19.0154,29.1549
+Zimbabwe,-19.0154,29.1549
 Macao,22.1987,113.5439
 St. Lucia,13.9094,-60.9789
-St. Kitts and Nevis,17.3578,-62.783
-St. Vincent and the Grenadines,12.9843,-61.2872
-United States Virgin Islands,18.3358,-64.8963
+St. Kitts and Nevis,17.3333,-62.75
+Saint Pierre and Miquelon,46.8333,-56.3333
+St. Vincent and the Grenadines,13.25,-61.2

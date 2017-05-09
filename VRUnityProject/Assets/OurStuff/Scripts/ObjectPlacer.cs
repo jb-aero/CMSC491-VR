@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
 
 public class ObjectPlacer : MonoBehaviour {
 
@@ -42,18 +43,20 @@ public class ObjectPlacer : MonoBehaviour {
     public List<string> years;
 
     //Colors for electricity
-    private List<float> elecR =  new List<float>{128F,140F,153F,179F,191F,204F,217F,230F,242F,255F};
-    private List<float> elecG =  new List<float>{128F,140F,153F,179F,191F,204F,217F,230F,242F,255F};
-    private List<float> elecB =  new List<float>{128F,115F,102F,89F,77F,64F,51F,38F,25F,13F,0F};
+
+    private List<float> elecR=  new List<float>{227F,223F,219F,215F,211F,207F,203F,199F,195F,191F};
+    private List<float> elecG=  new List<float>{229F,203F,178F,152F,127F,101F,76F,50F,25F,0F};
+    private List<float> elecB=  new List<float>{0F,0F,0F,0F,0F,0F,0F,0F,0F,0F};
+    
     //Colors for CO2 scales
-    private List<float> CO2R =  new List<float>{26F,77F,128F,179F,230F,255F,255F,255F,255F,255F};
-    private List<float> CO2G =  new List<float>{0F,0F,0F,0F,0F,26F,77F,128F,179F,230F};
-    private List<float> CO2B =  new List<float>{26F,77F,128F,179F,230F,255F,255F,255F,255F,255F};
+    private List<float> CO2R =  new List<float>{44F,57F,70F,83F,96F,109F,122F,135F,148F,162F};
+    private List<float> CO2G =  new List<float>{237F,213F,189F,165F,141F,117F,93F,69F,45F,21F};
+    private List<float> CO2B =  new List<float>{246F,230F,215F,200F,184F,169F,154F,138F,123F,108F};
 
     //Colors for tree Scales
-    private List<float> treeR =  new List<float>{0F,0F,0F,0F,0F,26F,77F,128F,179F,230F};
-    private List<float> treeG =  new List<float>{26F,77F,128F,179F,230F,255F,255F,255F,255F,255F};
-    private List<float> treeB =  new List<float>{0F,0F,0F,0F,0F,26F,77F,128F,179F,230F};
+    private List<float> treeR =  new List<float>{28F,28F,28F,28F,28F,28F,28F,28F,28F,28F};//{0F,0F,0F,0F,0F,26F,77F,128F,179F,230F};
+    private List<float> treeG =  new List<float>{130F,130F,130F,130F,130F,130F,130F,130F,130F,130F};//{26F,77F,128F,179F,230F,255F,255F,255F,255F,255F};
+    private List<float> treeB =  new List<float>{43F,43F,43F,43F,43F,43F,43F,43F,43F,43F};//{0F,0F,0F,0F,0F,26F,77F,128F,179F,230F};
 
     private List<GameObject> legendList = new List<GameObject>();
     private GameObject canvas;
@@ -82,16 +85,19 @@ public class ObjectPlacer : MonoBehaviour {
 
         //Build the list of legend-objects so we can color our legend later
         GameObject canvas = GameObject.Find("Canvas");
-        int counter = 0;
         foreach(Transform child in canvas.transform)
         {
-            if(child.name == "Legend"+counter)
+            Debug.Log(child.name);
+            //Debug.Log(counter);
+            
+            if(child.name.StartsWith("Legend"))
             {
-                child.name = counter.ToString();
+                string num = Regex.Match(child.name,@"\d+").Value;
+                child.name = num;
                 legendList.Add(child.gameObject);
-                counter += 1;
+                //counter += 1;
             }
-            if(child.name == "LegendDesc")
+            if(child.name == "Desc")
             {
                 description = child.gameObject.GetComponentInChildren<Text>();
             }
@@ -283,13 +289,15 @@ public class ObjectPlacer : MonoBehaviour {
 
 
         //Color lists for the light and fog
-        List<float> reds =  new List<float>{0F,0F,128F,255F,255F,255F,255F};
-        List<float> greens =  new List<float>{255F,255F,255F,255F,128F,64F,0F};
-        List<float> blues =  new List<float>{128F,0F,0F,0F,0F,0F,0F};
+        List<float> reds =  new List<float>{0F,24F,0F,57F,128F,91F,255F,125F,255F,159F,255F,193F,255F,227F};
+        List<float> greens =  new List<float>{255F,226F,255F,190F,255F,155F,255F,119F,128F,84F,64F,48F,0F,13F};
+        List<float> blues =  new List<float>{128F,224F,0F,209F,0F,194F,0F,180F,0F,165F,0F,150F,0F,136F};
 
-        List<float> fogR =  new List<float>{255F,235F,214F,194F,153F,122F,61F,0F};
-        List<float> fogG =  new List<float>{255F,235F,214F,194F,153F,122F,61F,0F};
-        List<float> fogB =  new List<float>{255F,224F,194F,163F,102F,82F,41F,0F};
+        List<float> fogR =  new List<float>{255F,98F,235F,104F,214F,110F,194F,116F,153F,122F,122F,128F,61F,134F,0F,141F};
+        List<float> fogG =  new List<float>{255F,228F,235F,204F,214F,180F,194F,157F,153F,133F,122F,110F,61F,86F,0F,63F};
+        List<float> fogB =  new List<float>{255F,243F,224F,225F,194F,208F,163F,190F,102F,173F,82F,155F,41F,138F,0F,121F};
+
+
 
         if(varToShow == 1)
         {
@@ -298,10 +306,20 @@ public class ObjectPlacer : MonoBehaviour {
                     foreach(GameObject legendPiece in legendList)
                     {
                         int theNum = int.Parse(legendPiece.transform.name.ToString());
+
                         if(theNum < blues.Count)
                         {
+
                             legendPiece.GetComponentInChildren<Image>().color = new Color(reds[theNum]/255F,greens[theNum]/255F,blues[theNum]/255F);
                             legendPiece.transform.GetComponentInChildren<Text>().color = new Color(1F,1F,1F,1F);
+                            if(theNum%2 == 0)
+                            {
+                                legendPiece.transform.GetComponentInChildren<Text>().text = "1x10^"+((theNum/2));
+                            }
+                            else
+                            {
+                                legendPiece.transform.GetComponentInChildren<Text>().text = "5x10^"+((theNum-1)/2);
+                            }
                         }
                         else
                         {
@@ -320,6 +338,14 @@ public class ObjectPlacer : MonoBehaviour {
                         {
                             legendPiece.GetComponentInChildren<Image>().color = new Color(fogR[theNum]/255F,fogG[theNum]/255F,fogB[theNum]/255F);
                             legendPiece.transform.GetComponentInChildren<Text>().color = new Color(1F,1F,1F,1F);
+                            if(theNum%2 == 0)
+                            {
+                                legendPiece.transform.GetComponentInChildren<Text>().text = "1x10^"+((theNum/2));
+                            }
+                            else
+                            {
+                                legendPiece.transform.GetComponentInChildren<Text>().text = "5x10^"+((theNum-1)/2);
+                            }
                         }
                         else
                         {
@@ -352,6 +378,13 @@ public class ObjectPlacer : MonoBehaviour {
                             amountLight = amountLight/10F;
                         }
 
+                        //Odd indices represent 5x10^# so we double our stuff
+                        power = power * 2;
+                        if(amountLight >= 5F)
+                        {
+                            power = power + 1;
+                        }
+
                         //Draw the lights
                         GameObject lightMarker = GameObject.Instantiate(lightPrefab, Vector3.zero, Quaternion.Euler(new Vector3(0, -longitude, latitude)));
                         listOfLights.Add(lightMarker);
@@ -360,7 +393,7 @@ public class ObjectPlacer : MonoBehaviour {
                         //Set the color and size of the lights
                         Color prettyColor = new Color(reds[power]/255F,greens[power]/255F,blues[power]/255F);
                         countryLight.color = prettyColor;
-                        countryLight.intensity = 1F + (amountLight/10F)*7F;
+                        //countryLight.intensity = 1F + (amountLight/10F)*7F;
                         float aRange = 2F*(radDeg/3.6F);
                         if(aRange > 4F)
                         {
@@ -388,6 +421,14 @@ public class ObjectPlacer : MonoBehaviour {
                             {
                                 power++;
                                 amountCO2 = amountCO2/10F;
+                            }
+
+
+                            //Odd indices represent 5x10^# so we double our stuff
+                            power = power * 2F;
+                            if(amountCO2 >= 5F)
+                            {
+                                power = power + 1;
                             }
 
                             //Draw the fog
@@ -436,7 +477,7 @@ public class ObjectPlacer : MonoBehaviour {
         }
         else
         {
-            description.text = "Value = Color OR Height (10% step sizes)";
+            description.text = "Value = Height (10% step sizes)";
         }
         if(varToShow == 1)
         {
@@ -444,8 +485,16 @@ public class ObjectPlacer : MonoBehaviour {
                     foreach(GameObject legendPiece in legendList)
                     {
                         int theNum = int.Parse(legendPiece.transform.name.ToString());
-                        legendPiece.GetComponentInChildren<Image>().color = new Color(elecR[theNum]/255F,elecG[theNum]/255F,elecB[theNum]/255F);
-                        legendPiece.transform.GetComponentInChildren<Text>().color = new Color(1F,1F,1F,1F);
+                        if(theNum %2 == 0)
+                        {
+                            theNum = theNum / 2;
+                            legendPiece.GetComponentInChildren<Image>().color = new Color(elecR[theNum]/255F,elecG[theNum]/255F,elecB[theNum]/255F);
+                            legendPiece.transform.GetComponentInChildren<Text>().color = new Color(1F,1F,1F,1F);
+                        }
+                        else{
+                            legendPiece.GetComponentInChildren<Image>().color = new Color(0F,0F,0F,0F);
+                            legendPiece.transform.GetComponentInChildren<Text>().color = new Color(0F,0F,0F,0F);
+                        }
                     }
         }
         else if(varToShow == 2)
@@ -455,8 +504,17 @@ public class ObjectPlacer : MonoBehaviour {
                     foreach(GameObject legendPiece in legendList)
                     {
                         int theNum = int.Parse(legendPiece.transform.name.ToString());
-                        legendPiece.GetComponentInChildren<Image>().color = new Color(CO2R[theNum]/255F,CO2G[theNum]/255F,CO2B[theNum]/255F);
-                        legendPiece.transform.GetComponentInChildren<Text>().color = new Color(1F,1F,1F,1F);
+                        if(theNum % 2 == 0)
+                        {
+                            theNum = theNum / 2;
+                            legendPiece.GetComponentInChildren<Image>().color = new Color(CO2R[theNum]/255F,CO2G[theNum]/255F,CO2B[theNum]/255F);
+                            legendPiece.transform.GetComponentInChildren<Text>().color = new Color(1F,1F,1F,1F);
+                        }
+                        else
+                        {
+                            legendPiece.GetComponentInChildren<Image>().color = new Color(0F,0F,0F,0F);
+                            legendPiece.transform.GetComponentInChildren<Text>().color = new Color(0F,0F,0F,0F);
+                        }
                     }
 
         }
@@ -465,8 +523,17 @@ public class ObjectPlacer : MonoBehaviour {
                     {
                         //Treeeees
                         int theNum = int.Parse(legendPiece.transform.name.ToString());
-                        legendPiece.GetComponentInChildren<Image>().color = new Color(treeR[theNum]/255F,treeG[theNum]/255F,treeB[theNum]/255F);
-                        legendPiece.transform.GetComponentInChildren<Text>().color = new Color(1F,1F,1F,1F);
+                        if(theNum % 2 == 0)
+                        {
+                            theNum = theNum / 2;
+                            legendPiece.GetComponentInChildren<Image>().color = new Color(treeR[theNum]/255F,treeG[theNum]/255F,treeB[theNum]/255F);
+                            legendPiece.transform.GetComponentInChildren<Text>().color = new Color(1F,1F,1F,1F);
+                        }
+                        else
+                        {
+                            legendPiece.GetComponentInChildren<Image>().color = new Color(0F,0F,0F,0F);
+                            legendPiece.transform.GetComponentInChildren<Text>().color = new Color(0F,0F,0F,0F);
+                        }
                     }
         }
             //Loop over the countries
