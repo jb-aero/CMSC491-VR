@@ -131,11 +131,11 @@ public class ObjectPlacer : MonoBehaviour {
 	void Update () {
 
         //Get button presses
-		/*if (Input.GetButtonDown ("RightMenuButton"))
+		if (Input.GetKeyDown ("m"))
 		{
 			Debug.Log ("Hit left menu.");
 			barGraph_view = !barGraph_view;
-		}*/
+		}
 
 		if (Input.GetButtonDown ("LeftMenuButton"))
 		{
@@ -301,7 +301,7 @@ public class ObjectPlacer : MonoBehaviour {
 
         if(varToShow == 1)
         {
-            description.text = "Value = intensity x 10^Color";
+            description.text = "Value = Color";
         //Now let's update the legend
                     foreach(GameObject legendPiece in legendList)
                     {
@@ -329,7 +329,7 @@ public class ObjectPlacer : MonoBehaviour {
                     }
         }
         else{
-            description.text = "Value = intensity x 10^Color";
+            description.text = "Value = Color";
             //Now let's update the legend
                     foreach(GameObject legendPiece in legendList)
                     {
@@ -437,8 +437,8 @@ public class ObjectPlacer : MonoBehaviour {
 
                             //Set the fog variables to appropriate values
                             Renderer rend = fogMarker.GetComponentInChildren<Renderer>();
-                            rend.material.SetFloat("_Pow", (amountCO2/10F)*4F);
-                            rend.material.SetFloat("_Alpha", power/10F);
+                            //rend.material.SetFloat("_Pow", (amountCO2/10F)*4F);
+                            rend.material.SetFloat("_Alpha", power/20F);
                             rend.material.SetColor("_Color", new Color(fogR[(int)power]/255F,fogG[(int)power]/255F,fogB[(int)power]/255F));
                             ParticleSystem aPart = fogMarker.GetComponentInChildren<ParticleSystem>();
                             Transform tChild = fogMarker.transform.GetChild(0);
@@ -490,6 +490,7 @@ public class ObjectPlacer : MonoBehaviour {
                             theNum = theNum / 2;
                             legendPiece.GetComponentInChildren<Image>().color = new Color(elecR[theNum]/255F,elecG[theNum]/255F,elecB[theNum]/255F);
                             legendPiece.transform.GetComponentInChildren<Text>().color = new Color(1F,1F,1F,1F);
+							legendPiece.transform.GetComponentInChildren<Text>().text = theNum.ToString();
                         }
                         else{
                             legendPiece.GetComponentInChildren<Image>().color = new Color(0F,0F,0F,0F);
@@ -508,7 +509,8 @@ public class ObjectPlacer : MonoBehaviour {
                         {
                             theNum = theNum / 2;
                             legendPiece.GetComponentInChildren<Image>().color = new Color(CO2R[theNum]/255F,CO2G[theNum]/255F,CO2B[theNum]/255F);
-                            legendPiece.transform.GetComponentInChildren<Text>().color = new Color(1F,1F,1F,1F);
+							legendPiece.transform.GetComponentInChildren<Text>().color = new Color(1F,1F,1F,1F);
+							legendPiece.transform.GetComponentInChildren<Text>().text = theNum.ToString();
                         }
                         else
                         {
@@ -527,7 +529,8 @@ public class ObjectPlacer : MonoBehaviour {
                         {
                             theNum = theNum / 2;
                             legendPiece.GetComponentInChildren<Image>().color = new Color(treeR[theNum]/255F,treeG[theNum]/255F,treeB[theNum]/255F);
-                            legendPiece.transform.GetComponentInChildren<Text>().color = new Color(1F,1F,1F,1F);
+							legendPiece.transform.GetComponentInChildren<Text>().color = new Color(1F,1F,1F,1F);
+							legendPiece.transform.GetComponentInChildren<Text>().text = theNum.ToString();
                         }
                         else
                         {
